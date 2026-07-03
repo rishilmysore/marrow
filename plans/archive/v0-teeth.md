@@ -33,21 +33,22 @@
 
 <!-- One atomic commit each. Record deviations inline as they happen. -->
 
-1. [ ] adapters/lint_test.sh (new, ~20 cases) + adapters/lint.sh rewrite: cap parsed from header, line count survives missing trailing newline; evidence gate = Verify section exists, Evidence column located, ≥1 data row, no blank Evidence cell (trailing pipe optional, escaped pipes safe); append-only = rows removed from DECISIONS.md must appear verbatim in decisions/archive-*. Run the harness against the old lint first; record the red count.
-2. [ ] templates/AGENTS.md + root AGENTS.md: risky-novel membership criterion (new external surface, irreversible data change, security-sensitive, or no repo pattern); multi-file bullet gains "list it in STATE.md In flight"; parallel bullet gains "closeouts land serially; DECISIONS.md append conflicts resolve as keep-both". Root only: boundary reworded to match the grep exactly; Verification gains the adapter-changes proof (`sh adapters/lint_test.sh`).
-3. [ ] templates/CLOSEOUT.md: abandon path writes `abandoned` in each empty Evidence cell; step 7 prune reaches lines "no longer earning its place — AGENTS.md included"; step 8 moves 40+ rows verbatim to decisions/archive-<year>.md ("rows", not "entries"; still-binding rules are already in AGENTS.md via step 4).
-4. [ ] templates/DECISIONS.md + root DECISIONS.md: placeholder instruction moves from the persistent header into the placeholder row it describes; root header synced to template.
-5. [ ] README.md: install order (stash before `cp`); marker pins the source commit (`marrow v0 @ <commit>`); pre-commit wiring pointer (the literal command lives in lint.sh's header).
+1. [x] adapters/lint_test.sh (new, 20 cases) + adapters/lint.sh rewrite: cap parsed from header, line count survives missing trailing newline; evidence gate = Verify section exists, Evidence column located, ≥1 data row, no blank Evidence cell (trailing pipe optional, escaped pipes safe); append-only = rows removed from DECISIONS.md must appear verbatim in decisions/archive-*. Run the harness against the old lint first; record the red count. (4ffa7b3)
+2. [x] templates/AGENTS.md + root AGENTS.md: risky-novel membership criterion (new external surface, irreversible data change, security-sensitive, or no repo pattern); multi-file bullet gains "list it in STATE.md In flight"; parallel bullet gains "closeouts land serially; DECISIONS.md append conflicts resolve as keep-both". Root only: boundary reworded to match the grep exactly; Verification gains the adapter-changes proof (`sh adapters/lint_test.sh`). (1780730)
+3. [x] templates/CLOSEOUT.md: abandon path writes `abandoned` in each empty Evidence cell; step 7 prune reaches lines "no longer earning its place — AGENTS.md included"; step 8 moves 40+ rows verbatim to decisions/archive-<year>.md ("rows", not "entries"; still-binding rules are already in AGENTS.md via step 4). (4462f8e)
+4. [x] templates/DECISIONS.md + root DECISIONS.md: placeholder instruction moves from the persistent header into the placeholder row it describes; root header synced to template. (da360f6)
+5. [x] README.md: install order (stash before `cp`); marker pins the source commit (`marrow v0 @ <commit>`); pre-commit wiring pointer (the literal command lives in lint.sh's header). (d574a3d)
+   - **Deviation:** planned and executed in one session — the audit that produced this plan was the planning context, and the plan was complete before the first edit. The fresh-context rule's intent (no reliance on unwritten context) held; the letter did not.
 
 ## Verify — the gate: cannot close while any row lacks evidence
 
 | Check | How | Evidence |
 |---|---|---|
-| Fast gate | `sh adapters/lint.sh && ! grep -rn "README" templates/` | |
-| Lint teeth, red | new harness vs pre-fix lint.sh: every audit hole red | |
-| Lint teeth, green | `sh adapters/lint_test.sh` after the rewrite: all cases ok | |
-| Self-containment | fresh `cp -r templates/*` to scratch: risky-novel criterion + In-flight rule present; lint ok on the copy | |
-| Growth budget | `git diff --stat` on templates/ vs the +8-line cap | |
+| Fast gate | `sh adapters/lint.sh && ! grep -rn "README" templates/` | `marrow-lint: ok`; grep empty — run after every task commit and at close |
+| Lint teeth, red | new harness vs pre-fix lint.sh: every audit hole red | 9 of 20 red: unterminated-line cap, missing cap phrase, raised cap honored, missing Evidence cell, no Verify section, no data rows, unstaged deletion, in-place edit, archive smuggle |
+| Lint teeth, green | `sh adapters/lint_test.sh` after the rewrite: all cases ok | `lint-test: 20 ok, 0 failing` |
+| Self-containment | fresh `cp -r templates/*` to scratch: risky-novel criterion + In-flight rule present; lint ok on the copy | criterion, In-flight registration, serial closeouts, abandon-fill each found once; zero README refs; `marrow-lint: ok` on the copy |
+| Growth budget | `git diff --stat` on templates/ vs the +8-line cap | bb00ac0..HEAD templates/: 12 insertions, 13 deletions = net −1; adapters 173 lines (cap 180) |
 
 ## Budget
 
@@ -58,6 +59,6 @@ Tripped → record it here, add a STATE.md blocker, ask before continuing.
 
 Run CLOSEOUT.md. Distilled line(s) destined for DECISIONS.md:
 
-- (draft) abandoned plans write `abandoned` in empty Evidence cells — the archive invariant stays absolute
-- (draft) risky-novel = wrong-step-expensive: new external surface, irreversible data, security-sensitive, or no repo pattern
-- (draft) lint derives what docs own (cap from STATE.md header); removed DECISIONS rows must reappear verbatim in the archive
+- abandoned plans write `abandoned` in empty Evidence cells — the archive invariant stays absolute
+- risky-novel = wrong-step-expensive: new external surface, irreversible data, security-sensitive, or no repo pattern
+- lint derives what docs own (cap from STATE.md header); removed DECISIONS rows must reappear verbatim in the archive
