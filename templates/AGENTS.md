@@ -1,8 +1,26 @@
 # <Project>
 
+<!-- marrow v0 -->
 <!-- TODO: one paragraph — what this is, who it's for, the one thing that must never break. -->
 
-Agent conventions for this repo. STATE.md holds current focus; DECISIONS.md holds every decision; plans/ holds in-flight work. Loop: classify → plan → execute → verify → distill (see CLOSEOUT.md).
+Agent conventions for this repo. STATE.md holds current focus; DECISIONS.md holds decision provenance; plans/ holds in-flight work, plans/archive/ closed work. This file states the current binding rules — if it disagrees with a newer DECISIONS.md line, this file is stale: fix it.
+
+## Session
+
+- Start: read this file, then STATE.md; resume its Next action unless told otherwise.
+- Context diet: planning adds DECISIONS.md; executing adds the one plan. plans/archive/ is history — dig only on purpose.
+- Blocked, or scope has doubled? Write a STATE.md blocker and ask.
+- Parallel work: one plan per worktree; STATE.md In flight lists them all.
+
+## The loop
+
+classify → plan → execute → verify → distill (CLOSEOUT.md). Ceremony scales by class, never by adding commands.
+
+- `trivial` — edit + verify inline; no plan; evidence goes in the commit message.
+- `multi-file` — copy plans/_TEMPLATE.md → plans/<slug>.md. Plan in a fresh context; execute in another. The plan is the entire handoff.
+- `risky-novel` — as multi-file, plus fill Spec before Tasks.
+- Reclassify upward the moment a task outgrows its class: a `trivial` that touches a second file or fails verification once is `multi-file` — stop and write the plan.
+- Too big for one plan: split into independently verifiable plans; sequence them in STATE.md Next action.
 
 ## Commands
 
@@ -20,7 +38,7 @@ What constitutes **proof** that a change works. Claiming "done" requires running
 
 - Fast gate (every change): <!-- TODO: e.g. `npm run typecheck && npm test` -->
 - Behavior proof (feature work): <!-- TODO: how to drive the real flow — e2e suite, smoke script, or manual steps -->
-- Evidence lands in the plan's Verify table: pasted output, or a screenshot for UI.
+- Evidence lands in the plan's Verify table — pasted output or a screenshot for UI — secrets redacted.
 
 ## Environment
 
@@ -31,8 +49,12 @@ Quirks that cost sessions to rediscover. Update the moment you hit one.
 ## Conventions
 
 - Style: <!-- TODO: formatter/linter + the 2–3 norms tooling can't enforce -->
-- Commits: one atomic commit per plan task, imperative mood.
+- Commits: one atomic commit per task, imperative mood. Docs (STATE.md, DECISIONS.md, plans/) are committed like code.
 - Comments: only for constraints the code cannot express.
+- Bugfix: failing test first, then the fix.
+- Debugging: reproduce → hypothesize → instrument → fix. Three failed fixes on one symptom → stop and write a plan.
+- History lives in git; docs describe the present. No document restates another — derive, don't copy.
+- Vendor what you adopt: no third-party skill packs at runtime — copy in, pin, review once.
 
 ## Design (UI repos — delete otherwise)
 
