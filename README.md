@@ -33,9 +33,9 @@ Each rule ships in the template file that owns it — that file's header is the 
 cp -r templates/* your-project/
 ```
 
-Fill the TODO markers in AGENTS.md. Existing repo? Merge your current conventions doc into AGENTS.md's sections — don't keep both, and mind that `cp` overwrites an existing AGENTS.md. Point your harness's memory file at it (for Claude Code, a `CLAUDE.md` containing `@AGENTS.md` — the import form is guaranteed; "see X" is advisory). Templates carry a `marrow v0` marker: diff against upstream before taking updates — rule 6 applies to Marrow itself.
+Fill the TODO markers in AGENTS.md. Existing repo? `cp` overwrites an existing AGENTS.md — stash yours first (git suffices), then merge it into the fresh template's sections; don't keep both. Point your harness's memory file at it (for Claude Code, a `CLAUDE.md` containing `@AGENTS.md` — the import form is guaranteed; "see X" is advisory). Templates carry a `marrow v0` marker — append the source commit as you copy (`marrow v0 @ abc1234`) so later diffs against upstream have an anchor; rule 6 applies to Marrow itself.
 
-Optional per-harness adapters (slash commands, hooks, checks) belong in `adapters/`; none are required. One example ships here: `adapters/lint.sh`, a POSIX check of the three mechanical invariants — state cap, evidence-gated archives, append-only decisions. Wire it as a pre-commit hook or CI step if you want the honor system to have teeth.
+Optional per-harness adapters (slash commands, hooks, checks) belong in `adapters/`; none are required. One example ships here: `adapters/lint.sh`, a POSIX check of the three mechanical invariants — state cap, evidence-gated archives, append-only decisions. Wire it as a pre-commit hook or CI step if you want the honor system to have teeth; the one-line hook command is in its header, and `adapters/lint_test.sh` keeps the check itself honest.
 
 This repo runs Marrow on itself: the root AGENTS.md, STATE.md, DECISIONS.md, and plans/ are the live instance — plans/archive/ holds worked examples.
 
