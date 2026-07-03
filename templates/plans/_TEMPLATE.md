@@ -1,7 +1,7 @@
 # Plan: <slug>
 
-<!-- Written for an executor with NO other context: fresh session, this file + AGENTS.md only.
-     Trivial tasks don't get plans. Risky/novel work fills Spec before Tasks. -->
+<!-- marrow v0 — written for an executor with NO other context: fresh session, this file + AGENTS.md only.
+     Trivial tasks don't get plans. Risky-novel work fills Spec before Tasks. -->
 
 **Intent:** <!-- what this delivers and why, 1–2 sentences -->
 **Class:** multi-file | risky-novel
@@ -16,6 +16,7 @@
 - Unknowns to resolve first:
 - Approach chosen + alternatives rejected (one line why each):
 - Failure modes / threats designed against:
+- Rollback if it ships broken:
 
 ## Context
 
@@ -43,7 +44,8 @@
 
 ## Budget
 
-Stop and reassess if: <!-- bound, e.g. "3 failed attempts on the same failing test" or "task 2 grows past 5 files" -->
+Stop if: <!-- bound, e.g. "3 failed attempts on the same failing test" or "task 2 grows past 5 files" -->
+Tripped → record it here, add a STATE.md blocker, ask before continuing.
 
 ## Closeout
 
