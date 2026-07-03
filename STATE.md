@@ -3,12 +3,12 @@
 <!-- marrow v0 — regenerated at every closeout and whenever it stops being true; never appended.
      Hard cap: 25 lines. Durable facts belong in DECISIONS.md or AGENTS.md, not here. -->
 
-**Focus:** v0 hardened per the 2026-07-03 external audit; ready for first real-project adoption.
-**Next action:** adopt Marrow in a live repo; file every friction point hit as a DECISIONS.md line.
+**Focus:** closing the 2026-07-03 second audit — enforcement must match doctrine (plans/v0-teeth.md).
+**Next action:** execute plans/v0-teeth.md task 1 (harness red against old lint, then the honest rewrite).
 
 ## In flight
 
-- none
+- plans/v0-teeth.md — executing
 
 ## Blockers
 
