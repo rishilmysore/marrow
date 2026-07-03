@@ -39,7 +39,7 @@ classify → plan → execute → verify → distill (templates/CLOSEOUT.md). Ce
 
 Quirks that cost sessions to rediscover. Update the moment you hit one.
 
-- none yet
+- An ARS scope-guard hook here blocks agents writing CLAUDE.md — the human maintains that pointer file by hand.
 
 ## Conventions
 
