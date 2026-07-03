@@ -1,32 +1,51 @@
 #!/bin/sh
 # marrow v0 — mechanical check of the three invariants the docs cannot self-enforce.
-# Run from the repo root; wire as a pre-commit hook or CI step. Exits non-zero on first failure.
+# Run from the repo root; regression harness: sh adapters/lint_test.sh.
+# Wire as a hook: printf 'sh adapters/lint.sh\n' > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 set -eu
 
 fail() { echo "marrow-lint: $1" >&2; exit 1; }
 
-# 1. STATE.md hard cap (STATE.md's header owns the number).
+# 1. STATE.md hard cap — the header owns the number; a missing phrase fails loud.
 if [ -f STATE.md ]; then
-  lines=$(wc -l < STATE.md)
-  [ "$lines" -le 25 ] || fail "STATE.md is $lines lines (cap 25) — regenerate, don't append"
+  cap=$(sed -n 's/.*Hard cap: *\([0-9]\{1,\}\) lines.*/\1/p' STATE.md | head -n 1)
+  [ -n "$cap" ] || fail "STATE.md header must declare 'Hard cap: N lines'"
+  lines=$(awk 'END { print NR }' STATE.md)
+  [ "$lines" -le "$cap" ] || fail "STATE.md is $lines lines (cap $cap) — regenerate, don't append"
 fi
 
-# 2. Archived plans are evidence-complete: no Verify row with an empty last cell.
+# 2. Archived plans are evidence-complete: a Verify section with an Evidence column,
+#    at least one data row, and no blank Evidence cell (abandoned plans write `abandoned`).
 for plan in plans/archive/*.md; do
   [ -e "$plan" ] || break
-  bad=$(awk '/^## Verify/{v=1;next} /^## /{v=0}
-             v && /^\|/ && $0 !~ /^[| :-]+$/ && $0 !~ /\| *Evidence *\|/ \
-               && $0 ~ /\|[[:blank:]]*\|[[:blank:]]*$/' "$plan")
-  [ -z "$bad" ] || fail "$plan archived with empty Evidence cell(s):
-$bad"
+  msg=$(awk '
+    /^## Verify/ { insec = 1; seen = 1; next }
+    /^## /       { insec = 0 }
+    {
+      if (!insec || $0 !~ /^\|/ || $0 ~ /^[| :-]+$/) next
+      line = $0; gsub(/\\[|]/, "\001", line)   # escaped pipes are content, not column breaks
+      n = split(line, cell, "|")
+      if (!ecol) { for (i = 1; i <= n; i++) if (cell[i] ~ /^[[:blank:]]*Evidence[[:blank:]]*$/) ecol = i; next }
+      rows++
+      if (cell[ecol] ~ /^[[:blank:]]*$/) { bad++; print "  row lacks evidence: " $0 }
+    }
+    END {
+      if (!seen)      print "  no \"## Verify\" section"
+      else if (!ecol) print "  Verify table missing an Evidence column"
+      else if (!rows) print "  Verify table has no data rows"
+      exit (bad || !seen || !ecol || !rows) ? 1 : 0
+    }' "$plan") || fail "$plan fails the evidence gate:
+$msg"
 done
 
-# 3. DECISIONS.md is append-only (staged deletions allowed only when archiving an epoch).
-if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && [ -f DECISIONS.md ]; then
-  if ! git diff --cached --name-only | grep -q '^decisions/archive-'; then
-    removed=$(git diff --cached -- DECISIONS.md | grep -c '^-[^-]' || true)
-    [ "$removed" -eq 0 ] || fail "DECISIONS.md loses $removed line(s) — append-only; archive an epoch instead"
-  fi
+# 3. DECISIONS.md is append-only: any row leaving it — staged or not — must reappear
+#    verbatim in decisions/archive-*.md (CLOSEOUT step 8's epoch move).
+if git cat-file -e HEAD:DECISIONS.md 2>/dev/null; then
+  git diff HEAD -- DECISIONS.md | sed -n 's/^-//p' | grep '^|' |
+  while IFS= read -r row; do
+    grep -qxF -- "$row" decisions/archive-*.md 2>/dev/null ||
+      fail "DECISIONS.md row removed without a verbatim archive copy: $row"
+  done
 fi
 
 echo "marrow-lint: ok"
