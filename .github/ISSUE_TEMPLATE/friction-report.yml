@@ -1,0 +1,66 @@
+name: Friction report
+description: "Real-adoption signal: friction points, moments of silence, leak count. Only version and harness are required."
+title: "friction: <one line>"
+labels: ["friction-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        These reports decide what changes (README § Feedback). One filled field beats no report.
+  - type: input
+    id: version
+    attributes:
+      label: Marrow version
+      description: "The tag you vendored from — what your markers say after `marrow v0 @`."
+      placeholder: v0.1.0
+    validations:
+      required: true
+  - type: input
+    id: harness
+    attributes:
+      label: Harness
+      description: What runs your agent.
+      placeholder: Claude Code / Codex / bare loop / human
+    validations:
+      required: true
+  - type: dropdown
+    id: activity
+    attributes:
+      label: What you were doing
+      options:
+        - Install
+        - Upgrade
+        - Loop — classify
+        - Loop — plan
+        - Loop — execute
+        - Loop — verify
+        - Loop — distill / closeout
+  - type: textarea
+    id: friction-points
+    attributes:
+      label: Friction points
+      description: "Steps that worked but fought you: you did what the doc said and it cost more than it should have. Number them."
+      placeholder: |
+        1.
+        2.
+  - type: textarea
+    id: moments-of-silence
+    attributes:
+      label: Moments of silence
+      description: "The doctrine went quiet: the loop raised a question and no shipped file answered it. One per line."
+  - type: input
+    id: leak-count
+    attributes:
+      label: Leak count
+      description: "Handoff leaks: times the executor needed information the plan plus AGENTS.md should have carried but didn't — the count of that kind of `Deviation:` line in the plan."
+      placeholder: "0"
+  - type: textarea
+    id: what-leaked
+    attributes:
+      label: What leaked
+      description: The information the plan should have carried, one line per leak.
+  - type: textarea
+    id: local-changes
+    attributes:
+      label: What you changed locally to proceed
+      description: Anything you edited in your vendored copy to keep moving.
