@@ -4,6 +4,7 @@
      Trivial tasks don't get plans. Risky-novel work fills Spec before Tasks. -->
 
 **Intent:** Ship this repo to an arbitrary developer: a README that onboards a newcomer cold, a versioning scheme with first public tag v0.1.0 plus CHANGELOG.md, a friction-report feedback channel, everything pushed to origin. This plan deliberately carries decisions, acceptance criteria, and gates — never README prose; authorship is the executor's. Judgment calls are expected: record them as `Deviation:` lines, they are welcome data, not failures.
+
 **Class:** risky-novel — new external surface (the entire adopter-facing contract: tag, versioning policy, feedback channel), an irreversible act (a published tag adopters pin; never force-push), and nothing in the repo to pattern-match against (no prior release).
 
 ## Success criteria (must be TRUE at close)
@@ -34,7 +35,7 @@
 
 ## Context
 
-- Files this plan may touch, exhaustively: README.md (restructure/extend), CHANGELOG.md (new), .github/ISSUE_TEMPLATE/friction-report.yml (new), STATE.md + DECISIONS.md + this file (closeout mechanics). Frozen: templates/*, adapters/*, AGENTS.md, LICENSE, CLAUDE.md (hook-guarded).
+- Files this plan may touch, exhaustively: README.md (restructure/extend), CHANGELOG.md (new), .github/ISSUE_TEMPLATE/friction-report.yml (new), STATE.md + DECISIONS.md + this file (closeout mechanics). Frozen: templates/*, adapters/*, LICENSE, CLAUDE.md (hook-guarded); AGENTS.md only via CLOSEOUT step 4 fold-in (Task 7).
 - Versioning needs zero shipped-file changes: templates carry the bare `<!-- marrow v0 -->` marker; the anchor format (`marrow v0 @ <anchor>`) is described only in the README, and any git ref — a tag included — already works as an anchor. Updating that README sentence to name tags is sanctioned and required by criterion b.
 - The first upstream delta is real: `git diff 21022d2..HEAD -- templates/ adapters/` touches templates/AGENTS.md, templates/STATE.md, adapters/lint.sh, adapters/lint_test.sh — the upgrade workflow (criterion f) has a live subject. Citing the concrete example in the README is the executor's call; a hardcoded commit id is itself a mechanical claim that ages — prefer the generic workflow.
 - Binding constraints (AGENTS.md + user instruction 2026-07-04):
@@ -73,20 +74,22 @@ Form fields (friction-report.yml; labels and wording are the executor's): marrow
 
 ## Battery (Verify row 5 — at least one question per criterion; pass = correct answer + README citation)
 
-| # | Crit. | Question |
-|---|---|---|
-| 1 | a | In two sentences: what is marrow, what is it not, and who is it for? |
-| 2 | b | Your repo already has an AGENTS.md with house rules, one of which the code currently violates. Walk the install: what do you run first, what happens to your existing AGENTS.md, what do you do with the violated rule, and what do you fill, seed, and commit at the end? |
-| 3 | b | You installed from tag v0.1.0 — what exactly does the marker line in each copied file say? |
-| 4 | c | Claude Code: what wiring beyond the copy does the README require, and when do AGENTS.md edits take effect? |
-| 5 | c | Your agent already reads AGENTS.md by convention (Codex-family): what extra wiring does it need? |
-| 6 | c | Bare API loop, no harness affordances: how does the agent pick the framework up each session, and how does lint run with no hook support? |
-| 7 | d | A task arrives: add rate limiting to your API — three files and a new dependency. Classify it, name the file you create next, and say where it gets listed. |
-| 8 | d | Why must the plan be written in one session and executed in a fresh one — and what single artifact carries the handoff? |
-| 9 | e | Where does the append-only check have teeth — pre-commit or CI — and what invocation makes it range-aware in CI? Where is the exact wiring one-liner? |
-| 10 | f | Marrow tags v0.2.0; your files say `marrow v0 @ v0.1.0`. Give the commands that show what changed in what you vendored, and what you update after applying. |
-| 11 | g | Mid-loop the doctrine went quiet twice and your executor logged two handoff leaks. Where do you report this, in what fields, and why believe it changes anything? |
-| 12 | g | Is marrow stable? What does 0.x mean here, and what promotes it to 1.0? |
+
+| #   | Crit. | Question                                                                                                                                                                                                                                                                   |
+| --- | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | a     | In two sentences: what is marrow, what is it not, and who is it for?                                                                                                                                                                                                       |
+| 2   | b     | Your repo already has an AGENTS.md with house rules, one of which the code currently violates. Walk the install: what do you run first, what happens to your existing AGENTS.md, what do you do with the violated rule, and what do you fill, seed, and commit at the end? |
+| 3   | b     | You installed from tag v0.1.0 — what exactly does the marker line in each copied file say?                                                                                                                                                                                 |
+| 4   | c     | Claude Code: what wiring beyond the copy does the README require, and when do AGENTS.md edits take effect?                                                                                                                                                                 |
+| 5   | c     | Your agent already reads AGENTS.md by convention (Codex-family): what extra wiring does it need?                                                                                                                                                                           |
+| 6   | c     | Bare API loop, no harness affordances: how does the agent pick the framework up each session, and how does lint run with no hook support?                                                                                                                                  |
+| 7   | d     | A task arrives: add rate limiting to your API — three files and a new dependency. Classify it, name the file you create next, and say where it gets listed.                                                                                                                |
+| 8   | d     | Why must the plan be written in one session and executed in a fresh one — and what single artifact carries the handoff?                                                                                                                                                    |
+| 9   | e     | Where does the append-only check have teeth — pre-commit or CI — and what invocation makes it range-aware in CI? Where is the exact wiring one-liner?                                                                                                                      |
+| 10  | f     | Marrow tags v0.2.0; your files say `marrow v0 @ v0.1.0`. Give the commands that show what changed in what you vendored, and what you update after applying.                                                                                                                |
+| 11  | g     | Mid-loop the doctrine went quiet twice and your executor logged two handoff leaks. Where do you report this, in what fields, and why believe it changes anything?                                                                                                          |
+| 12  | g     | Is marrow stable? What does 0.x mean here, and what promotes it to 1.0?                                                                                                                                                                                                    |
+
 
 ## Tasks
 
@@ -104,16 +107,18 @@ Form fields (friction-report.yml; labels and wording are the executor's): marrow
 
 ## Verify — the gate: cannot close while any row lacks evidence
 
-| Check | How | Evidence |
-|---|---|---|
-| 1 Fast gate + harness | `sh adapters/lint.sh && ! grep -rn "README" templates/` exits 0; `sh adapters/lint_test.sh` ends `lint-test: 26 ok, 0 failing` | |
-| 2 Sweep control caught the canary | Task 1's table pasted; ≥1 stale claim found blind; Appendix A cross-check passed | |
-| 3 Finished docs sweep clean | Task 5's claim → file:line → verdict table; zero stale | |
-| 4 Shipped files untouched | `git diff <plan-commit>..HEAD --stat -- templates/ adapters/` prints nothing | |
-| 5 Newcomer battery | Per question: subagent's answer + README citation + verdict; defects fixed and rerun clean, or residuals recorded with reasons | |
-| 6 Fixture install sound | Merged AGENTS.md; violated rule handled per the README's documented path; markers `marrow v0 @ v0.1.0`; `marrow-lint: ok` in the fixture | |
-| 7 Tag + release published | `git ls-remote --tags origin` shows v0.1.0; push output; release URL (or the recorded manual step) | |
-| 8 Cold clone installs | Fresh clone at v0.1.0, README-only install transcript summary, fast gate green, issue form renders | |
+
+| Check                             | How                                                                                                                                      | Evidence |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| 1 Fast gate + harness             | `sh adapters/lint.sh && ! grep -rn "README" templates/` exits 0; `sh adapters/lint_test.sh` ends `lint-test: 26 ok, 0 failing`           |          |
+| 2 Sweep control caught the canary | Task 1's table pasted; ≥1 stale claim found blind; Appendix A cross-check passed                                                         |          |
+| 3 Finished docs sweep clean       | Task 5's claim → file:line → verdict table; zero stale                                                                                   |          |
+| 4 Shipped files untouched         | `git diff <plan-commit>..HEAD --stat -- templates/ adapters/` prints nothing                                                             |          |
+| 5 Newcomer battery                | Per question: subagent's answer + README citation + verdict; defects fixed and rerun clean, or residuals recorded with reasons           |          |
+| 6 Fixture install sound           | Merged AGENTS.md; violated rule handled per the README's documented path; markers `marrow v0 @ v0.1.0`; `marrow-lint: ok` in the fixture |          |
+| 7 Tag + release published         | `git ls-remote --tags origin` shows v0.1.0; push output; release URL (or the recorded manual step)                                       |          |
+| 8 Cold clone installs             | Fresh clone at v0.1.0, README-only install transcript summary, fast gate green, issue form renders                                       |          |
+
 
 ## Budget
 
@@ -124,7 +129,9 @@ Stop if: the sweep control misses the canary twice (one procedure fix is allowed
 Run CLOSEOUT.md (Task 7 sequences it against the push). Append exactly these three rows, `<exec-date>` = execution date; they consume the ≤3-row budget, the mandatory versioning row first:
 
 | <exec-date> | Version = the adopter contract (five template files' names+roles, loop stages+classes, lint invocation+checks, marker convention); first public tag v0.1.0, internal iterations stay untagged; lint tightening is MINOR, flagged per-check in CHANGELOG; 1.0 at ≥3 instrumented adoptions + two file-contract-stable MINORs + one real marker-diff upgrade | plans/archive/public-cut.md Spec; adopter-visible in the README versioning section |
+
 | <exec-date> | Pushed to origin under explicit one-plan authorization; the standing never-push boundary is unchanged | user instruction 2026-07-04, recorded in plans/archive/public-cut.md Boundaries |
+
 | <exec-date> | Adoption feedback = one GitHub issue form speaking the instrumentation vocabulary (friction points, moments of silence, leak count) | .github/ISSUE_TEMPLATE/friction-report.yml; unstructured issues lose per-field comparability |
 
 ## Appendix A — SEALED: read only when Task 1 directs
