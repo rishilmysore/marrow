@@ -111,6 +111,11 @@ $VH
 | Behavior | drive | abandoned |
 EOF
 expect 0 "abandoned per CLOSEOUT: cells filled with 'abandoned'"
+fresh; mkdir -p "$T/plans/archive/2026"; cat > "$T/plans/archive/2026/x.md" <<EOF
+$VH
+| Fast gate | cmd | |
+EOF
+expect 1 "blank Evidence cell in a nested archive subdirectory"
 
 # 3 — DECISIONS.md append-only
 fresh git; del_row

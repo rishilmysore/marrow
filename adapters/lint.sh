@@ -24,8 +24,7 @@ fi
 
 # 2. Archived plans are evidence-complete: a Verify section with an Evidence column,
 #    at least one data row, and no blank Evidence cell (abandoned plans write `abandoned`).
-for plan in plans/archive/*.md; do
-  [ -e "$plan" ] || break
+find plans/archive -name '*.md' 2>/dev/null | while IFS= read -r plan; do
   msg=$(awk '
     /^## Verify/ { insec = 1; seen = 1; next }
     /^## /       { insec = 0 }
