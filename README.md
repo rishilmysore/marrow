@@ -77,7 +77,7 @@ Marrow is 0.x: the shape is set, the contract is not frozen, and real-adoption r
 
 - **Friction point** — a step that worked but fought you: you did what the doc said and it cost more than it should have.
 - **Moment of silence** — the doctrine went quiet: the loop raised a question and no shipped file answered it.
-- **Leak count** — handoff leaks: times an executor needed information the plan plus AGENTS.md should have carried but didn't (the plan's `Deviation:` lines of that kind, counted).
+- **Leak count** — handoff leaks: times an executor needed information the plan plus AGENTS.md should have carried but didn't; count the deviations of that kind the plan records.
 
 Only version and harness are required fields — a report with one filled field beats no report.
 

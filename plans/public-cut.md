@@ -101,7 +101,8 @@ Form fields (friction-report.yml; labels and wording are the executor's): marrow
 2. [x] **README.** Restructure and extend to meet every coverage criterion a–g under the Context constraints (register, surviving content, point-don't-restate, quickstart in the first screen). New ground the current file lacks: quickstart, the two non-Claude harness paths, the versioning policy (from Spec, adopter-visible), the upgrade workflow, the feedback section (0.x status, §Instrumentation, pointer to the form). Commit: `README: onboard a cold adopter — quickstart, harnesses, versioning, upgrade, feedback`
 3. [x] **CHANGELOG.md.** Keep a Changelog 1.1: `## [Unreleased]` (empty) and `## [0.1.0] - <exec-date>` describing what an adopter vendors at this cut — the five templates, the loop, the lint adapter and its BASE argument, the marker convention — adopter-facing, no internal narrative. Commit: `CHANGELOG: 0.1.0 — first public cut`
 4. [x] **Friction-report form.** Write .github/ISSUE_TEMPLATE/friction-report.yml per §Instrumentation and §Form fields, GitHub issue-form schema. Validation bar: a YAML parse (any parser at hand) plus a field-by-field check against the schema docs; the rendered form is re-checked live in Task 9. Commit: `feedback: friction-report issue form`
-5. [ ] **Staleness sweep — finished docs.** Rerun the Task-1-validated procedure over the finished README and CHANGELOG. Every mechanical claim verifies against its file or gets pointerized; zero stale. Paste the final table into Verify row 3. Fix-commits as needed: `README: de-stale <claim>`
+5. [x] **Staleness sweep — finished docs.** Rerun the Task-1-validated procedure over the finished README and CHANGELOG. Every mechanical claim verifies against its file or gets pointerized; zero stale. Paste the final table into Verify row 3. Fix-commits as needed: `README: de-stale <claim>`
+   - Sweep (fresh cold subagent, same scope rules + CHANGELOG and .github/): 49 claims — 40 verified, 1 stale, 6 deferred-to-post-push (v0.1.0 tag/URLs, → Task 9), 2 unverifiable (Claude Code/Codex runtime, inherent). The stale: README's leak-count definition cited a literal `Deviation:` line format no shipped template defines (_TEMPLATE.md:28 says "Record deviations inline as they happen"). Fixed by rewording README + form to "count the deviations of that kind the plan records" — grounded in _TEMPLATE.md:28 / CLOSEOUT.md:8. Zero stale after fix.
 6. [ ] **Newcomer leak test.** Build the fixture: a scratch repo (2–3 file toy project) whose pre-existing AGENTS.md carries ~3 house rules, one visibly violated by the code (e.g. "every script sets `set -euo pipefail`" while build.sh doesn't). Spawn a fresh subagent pinned to model `sonnet` with: a clone of this working repo (local path — nothing is pushed yet), instructions to use ONLY README.md for guidance (other files only as install materials or where the README directs), the cold install into the fixture, then the full §Battery answered with a README citation per question. Every wrong or unanswerable answer is a doc defect: fix the README, rerun failed questions on a fresh subagent, repeat until clean — or record the accepted residual with a reason. Also verify the installed fixture: one merged AGENTS.md (house rules + marrow's, not two files), the violated rule handled exactly as the README documents, markers anchored `marrow v0 @ v0.1.0`, `marrow-lint: ok` inside the fixture. Evidence → Verify rows 5–6.
 7. [ ] **Closeout, pre-push.** Run CLOSEOUT.md: deviations recorded; append exactly the three DECISIONS rows from §Closeout; fold-in judgment per CLOSEOUT step 4 (suggested, executor decides: one root-AGENTS.md Conventions line — a tag ships with its CHANGELOG entry and GitHub release); archive this plan with every Evidence cell non-blank — rows 7–8 carry the literal text `deferred: post-push — replaced by the evidence commit`; regenerate STATE.md (Focus: real-adoption watch; Next action: triage the first friction report or leak-count filing; In flight: none). One closeout commit.
 8. [ ] **Tag, push, release — in order, stop at any surprise.** `git status` clean → `git log --oneline origin/main..HEAD` matches Appendix B plus exactly this plan's own commits → `git tag -a v0.1.0 -m "marrow v0.1.0 — first public cut"` → `git push --dry-run origin main` (remote + auth sanity) → `git push origin main` → `git push origin v0.1.0` → `gh auth status`, then `gh release create v0.1.0 --verify-tag --title "marrow v0.1.0"` with the [0.1.0] CHANGELOG section as notes. If gh auth is gone: skip the release, record the manual step in Verify row 7 evidence, do not block.
@@ -114,7 +115,7 @@ Form fields (friction-report.yml; labels and wording are the executor's): marrow
 | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | 1 Fast gate + harness             | `sh adapters/lint.sh && ! grep -rn "README" templates/` exits 0; `sh adapters/lint_test.sh` ends `lint-test: 26 ok, 0 failing`           |          |
 | 2 Sweep control caught the canary | Task 1's table pasted; ≥1 stale claim found blind; Appendix A cross-check passed                                                         | Table at §Evidence — Task 1 below: 27 verified, 2 stale, 3 unverifiable. Both stales = README:40 (check count "three"→four; "CI…checks 1–2 still hold" ignores BASE arg) — found blind by a cold subagent (no plans/ access); Appendix A cross-check: exactly the canary. ✓ |
-| 3 Finished docs sweep clean       | Task 5's claim → file:line → verdict table; zero stale                                                                                   |          |
+| 3 Finished docs sweep clean       | Task 5's claim → file:line → verdict table; zero stale                                                                                   | Table at §Evidence — Task 5 below: 49 claims, 40 verified, 0 stale after fix (1 found → de-stale commit), 6 deferred to Task 9's post-push check, 2 unverifiable-external. ✓ |
 | 4 Shipped files untouched         | `git diff <plan-commit>..HEAD --stat -- templates/ adapters/` prints nothing                                                             |          |
 | 5 Newcomer battery                | Per question: subagent's answer + README citation + verdict; defects fixed and rerun clean, or residuals recorded with reasons           |          |
 | 6 Fixture install sound           | Merged AGENTS.md; violated rule handled per the README's documented path; markers `marrow v0 @ v0.1.0`; `marrow-lint: ok` in the fixture |          |
@@ -172,6 +173,55 @@ Run CLOSEOUT.md (Task 7 sequences it against the push). Append exactly these thr
 | 30 | 40 | lint_test.sh keeps the check honest | ran: `lint-test: 26 ok, 0 failing` | VERIFIED |
 | 31 | 42 | root files are the live instance; archive holds worked examples | repo root; plans/archive/ (3 files) | VERIFIED |
 | 32 | 50 | lineage counts (e.g. GSD ~70 commands) | third-party frameworks | UNVERIFIABLE |
+
+## Evidence — Task 5 sweep (Verify row 3; same cold-subagent procedure, scope + CHANGELOG.md and .github/)
+
+| # | Doc:line | Claim | Describes | Verdict |
+|---|---|---|---|---|
+| 1 | README:3 | five files | templates/ (5 files) | VERIFIED |
+| 2 | README:10 | clone `--branch v0.1.0` from github.com/rishilmysore/marrow | remote surface | DEFERRED → Task 9 (tag exists, repo public) |
+| 3 | README:11 | `cp -r marrow/templates/* your-project/` | scratch-tested, all 5 land | VERIFIED |
+| 4 | README:14 | cp overwrites existing AGENTS.md, destroys uncommitted edits | scratch-tested | VERIFIED |
+| 5 | README:16 | fill TODO markers + `<Project>` title | templates/AGENTS.md:1 + TODOs | VERIFIED |
+| 6 | README:16 | seed STATE.md Focus / Next action | templates/STATE.md:6-7 | VERIFIED |
+| 7 | README:16 | append tag to each file's `marrow v0` marker | 5 templates, one marker each | VERIFIED |
+| 8 | README:20 | Claude Code @AGENTS.md import; session-start read | external runtime | UNVERIFIABLE |
+| 9 | README:21 | Codex-family needs nothing | external runtime | UNVERIFIABLE |
+| 10 | README:22 | `sh adapters/lint.sh` runs by hand | ran, exit 0 | VERIFIED |
+| 11 | README:27 | harness layer = AGENTS.md build/run/prove | templates/AGENTS.md:25-41 | VERIFIED |
+| 12 | README:32 | loop stages | templates/AGENTS.md:17 | VERIFIED |
+| 13 | README:34 | trivial: inline, evidence in commit message | templates/AGENTS.md:19 | VERIFIED |
+| 14 | README:34 | multi-file: _TEMPLATE → plans/<slug>.md, STATE.md In flight | templates/AGENTS.md:20 | VERIFIED |
+| 15 | README:34 | risky-novel quote verbatim; + Spec before Tasks | templates/AGENTS.md:21; _TEMPLATE.md:4,14 | VERIFIED |
+| 16 | README:34 | AGENTS.md owns definitions | templates/AGENTS.md:19-22 | VERIFIED |
+| 17 | README:36 | plan in one session, execute fresh; plan is entire handoff | templates/AGENTS.md:20; _TEMPLATE.md:3 | VERIFIED |
+| 18 | README:36 | cannot close while Verify row lacks evidence | _TEMPLATE.md:38 | VERIFIED |
+| 19 | README:36 | CLOSEOUT: distill, archive, regenerate, prune | templates/CLOSEOUT.md:9-13 | VERIFIED |
+| 20 | README:40 | each rule ships in the file that owns it | STATE/DECISIONS headers; AGENTS.md:17,56,57 | VERIFIED (rules 3–6 in body, not header) |
+| 21–26 | README:42-47 | Rules index 1–6 | respective template lines | VERIFIED (all six) |
+| 27 | README:51 | nothing harness-specific in templates/ | grep clean | VERIFIED |
+| 28 | README:51 | four invariants, named | adapters/lint.sh:12-61 (checks 0–3) | VERIFIED |
+| 29 | README:51 | hook one-liner in header | adapters/lint.sh:4 | VERIFIED |
+| 30 | README:51 | append-only diffs worktree vs HEAD | adapters/lint.sh:8,50-61 | VERIFIED |
+| 31 | README:51 | CI `origin/main` base documented in header; range-aware | adapters/lint.sh:5; lint_test BASE=HEAD~1 case green | VERIFIED |
+| 32 | README:51 | lint_test.sh keeps it honest | ran: 26 ok, 0 failing | VERIFIED |
+| 33 | README:55 | contract = files' names/roles, loop, lint, marker | corresponding files | VERIFIED |
+| 34 | README:57 | marker's `v0` is the major | all markers read `marrow v0` | VERIFIED |
+| 35 | README:68-69 | upgrade commands (v0.2.0 hypothetical) | remote tags | DEFERRED → Task 9 (v0.1.0 anchor resolves) |
+| 36 | README:72 | CHANGELOG describes releases adopter-side | CHANGELOG.md:7-16 | VERIFIED |
+| 37 | README:76 | friction-report URL | .github/ISSUE_TEMPLATE/friction-report.yml exists, name matches | DEFERRED → Task 9 (URL renders) |
+| 38 | README:78-80 | form asks the three signals by name, matching definitions | friction-report.yml labels/descriptions | VERIFIED |
+| 39 | README:80 | leak count counted from "`Deviation:` lines" | no template defines that literal format (_TEMPLATE.md:28: "Record deviations inline") | STALE → FIXED (de-stale commit): reworded README + form to "deviations of that kind the plan records" |
+| 40 | README:82 | only version + harness required | friction-report.yml validations | VERIFIED |
+| 41 | README:84 | root files are live instance; archive has worked examples | repo root; plans/archive/ ×3 | VERIFIED |
+| 42 | CHANGELOG:3 | README § Versioning exists | README.md:53 | VERIFIED |
+| 43 | CHANGELOG:7 | [0.1.0] - 2026-07-04 | git tags | DEFERRED → Task 9 (tag on release commit) |
+| 44 | CHANGELOG:13 | five templates, roles as stated | each file's own header | VERIFIED |
+| 45 | CHANGELOG:14 | loop, three classes, evidence-gated closes | AGENTS.md:17-21; _TEMPLATE.md:38 | VERIFIED |
+| 46 | CHANGELOG:15 | lint four invariants; base-ref arg; regression harness | lint.sh:5,8,12-61; lint_test green | VERIFIED |
+| 47 | CHANGELOG:16 | marker pins `marrow v0 @ <tag>` | markers + README:16, consistent | VERIFIED |
+| 48 | CHANGELOG:18 | [Unreleased] compare link | remote surface | DEFERRED → Task 9 |
+| 49 | CHANGELOG:19 | [0.1.0] release link | remote surface | DEFERRED → Task 9 |
 
 ## Appendix A — SEALED: read only when Task 1 directs
 

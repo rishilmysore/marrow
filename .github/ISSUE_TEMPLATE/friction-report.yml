@@ -52,7 +52,7 @@ body:
     id: leak-count
     attributes:
       label: Leak count
-      description: "Handoff leaks: times the executor needed information the plan plus AGENTS.md should have carried but didn't — the count of that kind of `Deviation:` line in the plan."
+      description: "Handoff leaks: times the executor needed information the plan plus AGENTS.md should have carried but didn't — count the deviations of that kind the plan records."
       placeholder: "0"
   - type: textarea
     id: what-leaked
