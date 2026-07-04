@@ -1,7 +1,7 @@
 # State
 
 <!-- marrow v0 — regenerated at every closeout and whenever it stops being true; never appended.
-     Hard cap: 25 lines. Durable facts belong in DECISIONS.md or AGENTS.md, not here. -->
+     Hard cap: 25 lines; changing the cap is a decision — append the DECISIONS.md row first. Durable facts belong in DECISIONS.md or AGENTS.md, not here. -->
 
 **Focus:** third self-audit distilled into plans/v0-edges.md — every edit embedded verbatim; first cross-session handoff test.
 **Next action:** execute plans/v0-edges.md in a fresh session; that file + AGENTS.md are the entire context — consult nothing else.
