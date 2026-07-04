@@ -3,12 +3,12 @@
 <!-- marrow v0 — regenerated at every closeout and whenever it stops being true; never appended.
      Hard cap: 25 lines; changing the cap is a decision — append the DECISIONS.md row first. Durable facts belong in DECISIONS.md or AGENTS.md, not here. -->
 
-**Focus:** v0-edges closed — audit-3 landed in full; first cross-session plan handoff executed with zero deviations.
-**Next action:** idle — the next audit or real-adoption feedback decides the next plan.
+**Focus:** public cut planned into plans/public-cut.md — README onboarding, v0.1.0 tag + CHANGELOG, friction-report channel, one-plan-authorized push.
+**Next action:** execute plans/public-cut.md in a fresh session; that file + AGENTS.md are the entire context — consult nothing else.
 
 ## In flight
 
-- none
+- plans/public-cut.md — executing
 
 ## Blockers
 
