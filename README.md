@@ -7,13 +7,13 @@ Marrow is not a tool you install. It is markdown you copy into a repo. Any agent
 ## Install
 
 ```sh
-git clone --branch v0.1.0 https://github.com/rishilmysore/marrow.git
+git clone --branch v0.2.0 https://github.com/rishilmysore/marrow.git
 cp -r marrow/templates/* your-project/
 ```
 
 Already have an AGENTS.md? Stash it before the `cp` — commit or copy it away; `cp` overwrites the file and destroys uncommitted edits — then merge your rules into the fresh template's sections; don't keep both files. A merged rule the code currently violates stays in AGENTS.md; file the violation as STATE.md's Next action.
 
-Then fill the `TODO` markers and the `<Project>` title in AGENTS.md, seed STATE.md's Focus and Next action, and append the tag you installed from to each copied file's `marrow v0` marker — it becomes `marrow v0 @ v0.1.0`, the anchor every later upgrade diffs from; rule 6 below applies to Marrow itself. Commit the install.
+Then fill the `TODO` markers and the `<Project>` title in AGENTS.md, seed STATE.md's Focus and Next action, and append the tag you installed from to each copied file's `marrow v0` marker — it becomes `marrow v0 @ v0.2.0`, the anchor every later upgrade diffs from; rule 6 below applies to Marrow itself. Commit the install.
 
 ## Wiring a harness
 
@@ -48,7 +48,7 @@ Each rule ships in the template file that owns it — that file's header is the 
 
 ## Lint
 
-Optional per-harness adapters (slash commands, hooks, checks) belong in `adapters/`; none are required, and nothing harness-specific ever ships in `templates/`. One example ships here: `adapters/lint.sh`, a POSIX check of the four mechanical invariants the docs cannot self-enforce — a live instance carries STATE.md, the state cap, evidence-gated archives, append-only decisions. Wire it as a pre-commit hook — the exact one-liner is in its header — and every check has teeth before a commit lands: the append-only check diffs the worktree against HEAD. In CI, pass a base ref — `sh adapters/lint.sh origin/main`, also documented in the header — and that check turns range-aware, catching already-committed deletions too. `adapters/lint_test.sh` keeps the check itself honest.
+Optional per-harness adapters (slash commands, hooks, checks) belong in `adapters/`; none are required, and nothing harness-specific ever ships in `templates/`. Two examples ship here. The first, `adapters/lint.sh`, is a POSIX check of the four mechanical invariants the docs cannot self-enforce — a live instance carries STATE.md, the state cap, evidence-gated archives, append-only decisions. Wire it as a pre-commit hook — the exact one-liner is in its header — and every check has teeth before a commit lands: the append-only check diffs the worktree against HEAD. In CI, pass a base ref — `sh adapters/lint.sh origin/main`, also documented in the header — and that check turns range-aware, catching already-committed deletions too. `adapters/lint_test.sh` keeps the check itself honest. The second, `adapters/fresh-verify.md`, has a fresh context — one that did not write the code — re-run a finished plan's Verify table.
 
 ## Versioning
 
