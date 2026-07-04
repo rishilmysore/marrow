@@ -117,6 +117,13 @@ printf '| 1999-01-01 | unrelated | x |\n' > "$T/decisions/archive-2026.md"
 expect 1 "archive staged but the removed row is not in it"
 fresh git; printf '| 2026-01-03 | new | appended |\n' >> "$T/DECISIONS.md"
 expect 0 "pure append"
+fresh; { echo '# Decisions'; echo
+  echo '| Date | Decision | Why / evidence |'; echo '|---|---|---|'
+  echo '| YYYY-MM-DD | <your first entry replaces this row> | <why — plan link or measurement> |'
+} > "$T/DECISIONS.md"
+(cd "$T" && git init -q && git add -A && git -c user.name=t -c user.email=t@t commit -qm baseline) >/dev/null
+sed 's/^| YYYY-MM-DD .*/| 2026-01-01 | adopt X | plan link |/' "$T/DECISIONS.md" > "$T/.d" && mv "$T/.d" "$T/DECISIONS.md"
+expect 0 "placeholder row replaced by the first real entry"
 
 echo "lint-test: $ok ok, $bad failing"
 [ "$bad" -eq 0 ]

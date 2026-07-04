@@ -41,7 +41,7 @@ done
 # 3. DECISIONS.md is append-only: any row leaving it — staged or not — must reappear
 #    verbatim in decisions/archive-*.md (CLOSEOUT step 8's epoch move).
 if git cat-file -e HEAD:DECISIONS.md 2>/dev/null; then
-  git diff HEAD -- DECISIONS.md | sed -n 's/^-//p' | grep '^|' |
+  git diff HEAD -- DECISIONS.md | sed -n 's/^-//p' | grep '^|' | grep -vF '| YYYY-MM-DD |' |
   while IFS= read -r row; do
     grep -qxF -- "$row" decisions/archive-*.md 2>/dev/null ||
       fail "DECISIONS.md row removed without a verbatim archive copy: $row"
