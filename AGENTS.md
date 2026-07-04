@@ -20,7 +20,7 @@ classify → plan → execute → verify → distill (templates/CLOSEOUT.md). Ce
 - `trivial` — edit + verify inline; no plan; evidence goes in the commit message.
 - `multi-file` — copy templates/plans/_TEMPLATE.md → plans/<slug>.md and list it in STATE.md In flight. Plan in a fresh context; execute in another. The plan is the entire handoff.
 - `risky-novel` — as multi-file, plus fill Spec before Tasks. Qualifies: new external surface (API, schema, dependency), irreversible data change, security-sensitive, or nothing in the repo to pattern-match against.
-- Reclassify upward the moment a task outgrows its class: a `trivial` that touches a second file or fails verification once is `multi-file` — stop and write the plan.
+- Reclassify upward the moment a task outgrows its class: a `trivial` that touches a second file or fails verification once is `multi-file` — stop and write the plan. A `multi-file` that turns out `risky-novel` mid-execution: stop before the next task, revert uncommitted work, fill Spec retroactively — or abandon per CLOSEOUT and replan.
 - Too big for one plan: split into independently verifiable plans; sequence them in STATE.md Next action.
 
 ## Commands
