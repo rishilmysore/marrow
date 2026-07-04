@@ -3,12 +3,12 @@
 <!-- marrow v0 — regenerated at every closeout and whenever it stops being true; never appended.
      Hard cap: 25 lines. Durable facts belong in DECISIONS.md or AGENTS.md, not here. -->
 
-**Focus:** v0 enforcement now matches doctrine (second audit closed); ready for first real-project adoption.
-**Next action:** adopt Marrow in a live repo; file every friction point hit as a DECISIONS.md line.
+**Focus:** third self-audit distilled into plans/v0-edges.md — every edit embedded verbatim; first cross-session handoff test.
+**Next action:** execute plans/v0-edges.md in a fresh session; that file + AGENTS.md are the entire context — consult nothing else.
 
 ## In flight
 
-- none
+- plans/v0-edges.md — executing
 
 ## Blockers
 
