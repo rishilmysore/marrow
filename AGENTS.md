@@ -48,6 +48,7 @@ Quirks that cost sessions to rediscover. Update the moment you hit one.
 - Commits: one atomic commit per task, imperative mood. Docs (STATE.md, DECISIONS.md, plans/) are committed like code.
 - History lives in git; docs describe the present. No document restates another — derive, don't copy.
 - Vendor what you adopt: copy in, pin, review once.
+- A tag ships with its CHANGELOG entry and GitHub release.
 
 ## Boundaries
 
