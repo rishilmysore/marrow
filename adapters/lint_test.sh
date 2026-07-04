@@ -33,6 +33,13 @@ expect() { # expect <0|1> <description>
   else bad=$((bad + 1)); echo "  BAD $* — want exit $want, got $got"; fi
 }
 
+expect_with() { # expect_with <base> <0|1> <description> — lint.sh with a BASE argument
+  base=$1; want=$2; shift 2
+  if (cd "$T" && sh "$LINT" "$base") >/dev/null 2>&1; then got=0; else got=1; fi
+  if [ "$got" = "$want" ]; then ok=$((ok + 1)); echo "  ok  $*"
+  else bad=$((bad + 1)); echo "  BAD $* — want exit $want, got $got"; fi
+}
+
 plan() { cat > "$T/plans/archive/p.md"; }
 del_row() { sed '5d' "$T/DECISIONS.md" > "$T/.d" && mv "$T/.d" "$T/DECISIONS.md"; }
 
@@ -124,6 +131,10 @@ fresh; { echo '# Decisions'; echo
 (cd "$T" && git init -q && git add -A && git -c user.name=t -c user.email=t@t commit -qm baseline) >/dev/null
 sed 's/^| YYYY-MM-DD .*/| 2026-01-01 | adopt X | plan link |/' "$T/DECISIONS.md" > "$T/.d" && mv "$T/.d" "$T/DECISIONS.md"
 expect 0 "placeholder row replaced by the first real entry"
+fresh git; sed 's/adopt X/adopt Z/' "$T/DECISIONS.md" > "$T/.d" && mv "$T/.d" "$T/DECISIONS.md"
+(cd "$T" && git add -A && git -c user.name=t -c user.email=t@t commit -qm reword) >/dev/null
+expect 0 "reword already committed — invisible to the no-arg HEAD diff"
+expect_with HEAD~1 1 "same committed reword caught with BASE=HEAD~1"
 
 echo "lint-test: $ok ok, $bad failing"
 [ "$bad" -eq 0 ]

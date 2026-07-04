@@ -2,7 +2,10 @@
 # marrow v0 — mechanical check of the three invariants the docs cannot self-enforce.
 # Run from the repo root; regression harness: sh adapters/lint_test.sh.
 # Wire as a hook: printf 'sh adapters/lint.sh\n' > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+# CI: sh adapters/lint.sh origin/main — check 3 diffs DECISIONS.md against that base instead of HEAD.
 set -eu
+
+BASE=${1:-HEAD}
 
 fail() { echo "marrow-lint: $1" >&2; exit 1; }
 
@@ -40,8 +43,8 @@ done
 
 # 3. DECISIONS.md is append-only: any row leaving it — staged or not — must reappear
 #    verbatim in decisions/archive-*.md (CLOSEOUT step 8's epoch move).
-if git cat-file -e HEAD:DECISIONS.md 2>/dev/null; then
-  git diff HEAD -- DECISIONS.md | sed -n 's/^-//p' | grep '^|' | grep -vF '| YYYY-MM-DD |' |
+if git cat-file -e "$BASE":DECISIONS.md 2>/dev/null; then
+  git diff "$BASE" -- DECISIONS.md | sed -n 's/^-//p' | grep '^|' | grep -vF '| YYYY-MM-DD |' |
   while IFS= read -r row; do
     grep -qxF -- "$row" decisions/archive-*.md 2>/dev/null ||
       fail "DECISIONS.md row removed without a verbatim archive copy: $row"
