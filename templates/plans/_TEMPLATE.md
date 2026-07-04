@@ -15,7 +15,7 @@
 
 - Unknowns to resolve first:
 - Approach chosen + alternatives rejected (one line why each):
-- Failure modes / threats designed against:
+- Failure modes / threats designed against (security-sensitive: name the attack surfaces and who abuses them):
 - Rollback if it ships broken:
 
 ## Context
