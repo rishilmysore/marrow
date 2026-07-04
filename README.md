@@ -35,6 +35,8 @@ cp -r templates/* your-project/
 
 Existing repo? `cp` overwrites an existing AGENTS.md — stash yours first (commit or copy it — cp destroys uncommitted edits), then merge it into the fresh template's sections; don't keep both. A merged rule the code currently violates stays in AGENTS.md; file the violation as STATE.md's Next action. Point your harness's memory file at AGENTS.md (for Claude Code, a `CLAUDE.md` containing `@AGENTS.md` — the import form is guaranteed; "see X" is advisory). Templates carry a `marrow v0` marker (`marrow v0 @ abc1234` once the source commit is appended) so later diffs against upstream have an anchor; rule 6 applies to Marrow itself. Fill the TODO markers and the `<Project>` title in AGENTS.md, seed STATE.md's Focus and Next action, append the source commit to each copied file's marker, and commit the install.
 
+Harness note: Claude Code reads AGENTS.md once at session start; edits from a closeout are for the next session.
+
 Optional per-harness adapters (slash commands, hooks, checks) belong in `adapters/`; none are required. One example ships here: `adapters/lint.sh`, a POSIX check of the three mechanical invariants — state cap, evidence-gated archives, append-only decisions. Wire it as a pre-commit hook (the append-only check compares your worktree against HEAD, so it only has teeth before the commit lands; as a CI step, checks 1–2 still hold). The one-line hook command is in its header, and `adapters/lint_test.sh` keeps the check itself honest.
 
 This repo runs Marrow on itself: the root AGENTS.md, STATE.md, DECISIONS.md, and plans/ are the live instance — plans/archive/ holds worked examples.
