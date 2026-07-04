@@ -47,7 +47,7 @@
 
 <!-- One atomic commit each, imperative mood. Before each commit: sh adapters/lint.sh && ! grep -rn "README" templates/ ; for lint tasks also sh adapters/lint_test.sh with the stated count. Record deviations inline. -->
 
-1. [ ] **Exempt the DECISIONS placeholder row from the append-only check** (fixes: a fresh install's first closeout replaces the template's placeholder row and lint rejects it).
+1. [x] **Exempt the DECISIONS placeholder row from the append-only check** (fixes: a fresh install's first closeout replaces the template's placeholder row and lint rejects it).
 
 First, capture the pre-fix evidence for Verify row 3 — run this probe from the repo root and paste its output (expect `probe exit=1`):
 
@@ -101,7 +101,7 @@ expect 0 "placeholder row replaced by the first real entry"
 Rerun the probe (expect `marrow-lint: ok`, `probe exit=0`) and `sh adapters/lint_test.sh` (expect `lint-test: 21 ok, 0 failing`).
 Commit: `lint: exempt the DECISIONS placeholder row from append-only`
 
-2. [ ] **Make check 3 range-aware (`BASE` argument) and scope the README's CI claim** (fixes: the append-only check diffs against HEAD, so as a CI step it never sees committed violations; the README claims otherwise).
+2. [x] **Make check 3 range-aware (`BASE` argument) and scope the README's CI claim** (fixes: the append-only check diffs against HEAD, so as a CI step it never sees committed violations; the README claims otherwise).
 
 In `adapters/lint.sh`, replace:
 
@@ -200,7 +200,7 @@ Wire it as a pre-commit hook (the append-only check compares your worktree again
 `sh adapters/lint_test.sh` → `lint-test: 23 ok, 0 failing`.
 Commit: `lint: BASE argument makes check 3 range-aware; README scopes the CI claim`
 
-3. [ ] **Epoch moves are all-or-nothing** (fixes: removing one archived-elsewhere row passes lint, but an epoch move must take every row).
+3. [x] **Epoch moves are all-or-nothing** (fixes: removing one archived-elsewhere row passes lint, but an epoch move must take every row).
 
 In `adapters/lint.sh`, replace:
 
@@ -250,7 +250,7 @@ expect 1 "single-row removal with an archive copy — partial epoch move"
 `sh adapters/lint_test.sh` → `lint-test: 24 ok, 0 failing`.
 Commit: `lint: epoch moves are all-or-nothing`
 
-4. [ ] **A live instance must carry STATE.md** (fixes: delete STATE.md entirely and every check silently passes).
+4. [x] **A live instance must carry STATE.md** (fixes: delete STATE.md entirely and every check silently passes).
 
 In `adapters/lint.sh`, replace:
 
@@ -312,7 +312,7 @@ expect 1 "plans/ and DECISIONS.md present but STATE.md missing"
 `sh adapters/lint_test.sh` → `lint-test: 25 ok, 0 failing`.
 Commit: `lint: a live instance must carry STATE.md`
 
-5. [ ] **Evidence gate reaches nested archive subdirectories** (fixes: the `plans/archive/*.md` glob skips `plans/archive/2026/x.md`).
+5. [x] **Evidence gate reaches nested archive subdirectories** (fixes: the `plans/archive/*.md` glob skips `plans/archive/2026/x.md`).
 
 In `adapters/lint.sh`, replace:
 
@@ -361,7 +361,7 @@ expect 1 "blank Evidence cell in a nested archive subdirectory"
 `sh adapters/lint_test.sh` → `lint-test: 26 ok, 0 failing`.
 Commit: `lint: evidence gate reaches nested archive dirs`
 
-6. [ ] **Mid-execution reclassify path** — in BOTH `templates/AGENTS.md` and root `AGENTS.md`, replace:
+6. [x] **Mid-execution reclassify path** — in BOTH `templates/AGENTS.md` and root `AGENTS.md`, replace:
 
 ```
 - Reclassify upward the moment a task outgrows its class: a `trivial` that touches a second file or fails verification once is `multi-file` — stop and write the plan.
@@ -375,7 +375,7 @@ with:
 
 Commit: `AGENTS: mid-execution reclassify path to risky-novel`
 
-7. [ ] **Cap changes are decisions** — in BOTH `templates/STATE.md` and root `STATE.md`, replace:
+7. [x] **Cap changes are decisions** — in BOTH `templates/STATE.md` and root `STATE.md`, replace:
 
 ```
      Hard cap: 25 lines. Durable facts belong in DECISIONS.md or AGENTS.md, not here. -->
@@ -389,7 +389,7 @@ with:
 
 Commit: `STATE: changing the hard cap requires a DECISIONS.md row`
 
-8. [ ] **Commit the plan before executing** — in BOTH `templates/AGENTS.md` and root `AGENTS.md`, replace:
+8. [x] **Commit the plan before executing** — in BOTH `templates/AGENTS.md` and root `AGENTS.md`, replace:
 
 ```
 The plan is the entire handoff.
@@ -404,7 +404,7 @@ The plan is the entire handoff — commit it before executing.
 (One occurrence per file, in the `multi-file` bullet.)
 Commit: `AGENTS: commit the plan before executing`
 
-9. [ ] **Install path closes its six gaps.** In `README.md`, replace the whole paragraph:
+9. [x] **Install path closes its six gaps.** In `README.md`, replace the whole paragraph:
 
 ```
 Fill the TODO markers in AGENTS.md. Existing repo? `cp` overwrites an existing AGENTS.md — stash yours first (git suffices), then merge it into the fresh template's sections; don't keep both. Point your harness's memory file at it (for Claude Code, a `CLAUDE.md` containing `@AGENTS.md` — the import form is guaranteed; "see X" is advisory). Templates carry a `marrow v0` marker — append the source commit as you copy (`marrow v0 @ abc1234`) so later diffs against upstream have an anchor; rule 6 applies to Marrow itself.
@@ -444,7 +444,7 @@ with:
 
 Commit: `install: README six-gap path; template title TODO; In-flight empty state`
 
-10. [ ] **Harness note in README.** Immediately after the Install paragraph edited in Task 9 (which now ends `…and commit the install.`) and before the paragraph starting `Optional per-harness adapters`, insert as its own paragraph:
+10. [x] **Harness note in README.** Immediately after the Install paragraph edited in Task 9 (which now ends `…and commit the install.`) and before the paragraph starting `Optional per-harness adapters`, insert as its own paragraph:
 
 ```
 Harness note: Claude Code reads AGENTS.md once at session start; edits from a closeout are for the next session.
@@ -452,21 +452,23 @@ Harness note: Claude Code reads AGENTS.md once at session start; edits from a cl
 
 Commit: `README: harness note — AGENTS.md edits land next session`
 
+Handoff-leak log: empty — all old-text blocks matched byte-exact against the plan-commit worktree; no edit was under-specified; zero `Deviation:` lines. (Feeds the audit-3 m-3 deferral: no copy or normalization leak logged.)
+
 ## Verify — the gate: cannot close while any row lacks evidence
 
 | Check | How | Evidence |
 |---|---|---|
-| Fast gate | `sh adapters/lint.sh && ! grep -rn "README" templates/` — exit 0, prints `marrow-lint: ok` | |
-| Harness, all cases | `sh adapters/lint_test.sh` — final line exactly `lint-test: 26 ok, 0 failing` | |
-| First closeout unblocked | Task 1's probe script pasted twice: before its lint.sh edit → `probe exit=1`; after → `marrow-lint: ok` + `probe exit=0` | |
-| Committed reword caught via BASE | harness lines `ok  reword already committed — invisible to the no-arg HEAD diff` and `ok  same committed reword caught with BASE=HEAD~1` | |
-| Epoch all-or-nothing | harness lines `ok  full epoch move — every row verbatim in decisions/archive-2026.md` and `ok  single-row removal with an archive copy — partial epoch move` | |
-| Missing STATE.md fails | harness line `ok  plans/ and DECISIONS.md present but STATE.md missing` | |
-| Nested archive reached | harness line `ok  blank Evidence cell in a nested archive subdirectory` | |
-| Install re-walk, six gaps | Scratch repo with a pre-existing AGENTS.md (one rule the code violates) and one uncommitted edit; follow README Install literally. Quote the README instruction that answers each: ① uncommitted edits destroyed by cp ② merge into template sections, don't keep both ③ violated merged rule stays, violation filed as STATE.md Next action ④ fill TODOs + `<Project>` title ⑤ seed STATE.md Focus and Next action ⑥ append source commit to every copied file's marker, commit the install | |
-| Template behavior proof | Copy templates/ to a scratch dir; walk one task through classify→plan→execute→verify→distill. The copied set must answer every question the loop asks, incl. the three new ones: mid-flight reclassify, cap-change rule, commit-before-execute | |
-| Ledger budget | After CLOSEOUT step 6 (STATE.md regenerated), before its commit: `wc -c AGENTS.md STATE.md`. Baseline at plan commit: 3266 + 841 = 4107 bytes. Doctrine edits (Tasks 6–8) sum ≈ +280 bytes ≈ +70 tokens — audit predicted ≈ +50; the accepted reclassify sentence simply runs long. Record actuals. Delta > +400 bytes (+100 tokens): attribute AGENTS.md doctrine vs regenerated STATE.md body churn; doctrine alone past +100 tokens trips the Budget | |
-| Mirror parity | `grep -c 'mid-execution' AGENTS.md templates/AGENTS.md` then `grep -c 'commit it before executing' AGENTS.md templates/AGENTS.md` then `grep -c 'changing the cap is a decision' STATE.md templates/STATE.md` — every count exactly 1 | |
+| Fast gate | `sh adapters/lint.sh && ! grep -rn "README" templates/` — exit 0, prints `marrow-lint: ok` | 2026-07-03: `marrow-lint: ok`, grep silent, exit 0 — run before every task commit and again at closeout |
+| Harness, all cases | `sh adapters/lint_test.sh` — final line exactly `lint-test: 26 ok, 0 failing` | final line `lint-test: 26 ok, 0 failing`; per-task counts landed as planned (21, 23, 24, 25, 26) |
+| First closeout unblocked | Task 1's probe script pasted twice: before its lint.sh edit → `probe exit=1`; after → `marrow-lint: ok` + `probe exit=0` | before: `marrow-lint: DECISIONS.md row removed without a verbatim archive copy: (the YYYY-MM-DD placeholder row)` + `probe exit=1`; after: `marrow-lint: ok` + `probe exit=0` |
+| Committed reword caught via BASE | harness lines `ok  reword already committed — invisible to the no-arg HEAD diff` and `ok  same committed reword caught with BASE=HEAD~1` | both lines present verbatim in the 26-ok run |
+| Epoch all-or-nothing | harness lines `ok  full epoch move — every row verbatim in decisions/archive-2026.md` and `ok  single-row removal with an archive copy — partial epoch move` | both lines present verbatim; the flip from expect 0 was Task 3's one sanctioned change |
+| Missing STATE.md fails | harness line `ok  plans/ and DECISIONS.md present but STATE.md missing` | line present verbatim in the 26-ok run |
+| Nested archive reached | harness line `ok  blank Evidence cell in a nested archive subdirectory` | line present verbatim in the 26-ok run |
+| Install re-walk, six gaps | Scratch repo with a pre-existing AGENTS.md (one rule the code violates) and one uncommitted edit; follow README Install literally. Quote the README instruction that answers each: ① uncommitted edits destroyed by cp ② merge into template sections, don't keep both ③ violated merged rule stays, violation filed as STATE.md Next action ④ fill TODOs + `<Project>` title ⑤ seed STATE.md Focus and Next action ⑥ append source commit to every copied file's marker, commit the install | walked cold in a scratch repo (pre-existing AGENTS.md carrying a violated shellcheck-in-CI rule + one uncommitted edit; cp destroyed the edit, the stash copy survived — gap ① proven live). README quotes: ① "stash yours first (commit or copy it — cp destroys uncommitted edits)" ② "merge it into the fresh template's sections; don't keep both" ③ "A merged rule the code currently violates stays in AGENTS.md; file the violation as STATE.md's Next action" ④ "Fill the TODO markers and the `<Project>` title in AGENTS.md" ⑤ "seed STATE.md's Focus and Next action" ⑥ "append the source commit to each copied file's marker, and commit the install". Installed instance: markers read `marrow v0 @ 168ac96`, zero TODOs left, `marrow-lint: ok` |
+| Template behavior proof | Copy templates/ to a scratch dir; walk one task through classify→plan→execute→verify→distill. The copied set must answer every question the loop asks, incl. the three new ones: mid-flight reclassify, cap-change rule, commit-before-execute | walked a caps-flag task through the full loop in a scratch copy: classified multi-file by the loop bullets, plan copied from plans/_TEMPLATE.md, listed In flight, committed before executing (new rule), atomic execute commit, evidence-filled Verify, CLOSEOUT steps incl. first-entry placeholder replacement and archive — `marrow-lint: ok` after closeout, also with `BASE=HEAD~1`. Copied set alone answered all three new questions: reclassify sentence (AGENTS.md), "changing the cap is a decision" (STATE.md header), "commit it before executing" (AGENTS.md) |
+| Ledger budget | After CLOSEOUT step 6 (STATE.md regenerated), before its commit: `wc -c AGENTS.md STATE.md`. Baseline at plan commit: 3266 + 841 = 4107 bytes. Doctrine edits (Tasks 6–8) sum ≈ +280 bytes ≈ +70 tokens — audit predicted ≈ +50; the accepted reclassify sentence simply runs long. Record actuals. Delta > +400 bytes (+100 tokens): attribute AGENTS.md doctrine vs regenerated STATE.md body churn; doctrine alone past +100 tokens trips the Budget | after STATE.md regeneration, before the closeout commit: `wc -c` → AGENTS.md 3472, STATE.md 981, total 4453; baseline 4107 → delta +346 bytes ≈ +87 tokens, under the +400 threshold. Attribution anyway: AGENTS.md doctrine +206 (Tasks 6+8); STATE.md +140, of which the Task 7 cap clause is +76 and regenerated body churn +64. Doctrine sum +282 bytes ≈ +71 tokens — matches the plan's ≈ +280 estimate, under the +100-token Budget trip |
+| Mirror parity | `grep -c 'mid-execution' AGENTS.md templates/AGENTS.md` then `grep -c 'commit it before executing' AGENTS.md templates/AGENTS.md` then `grep -c 'changing the cap is a decision' STATE.md templates/STATE.md` — every count exactly 1 | all six counts exactly 1 (AGENTS.md 1 / templates/AGENTS.md 1, twice; STATE.md 1 / templates/STATE.md 1) |
 
 ## Budget
 
