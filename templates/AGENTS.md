@@ -38,7 +38,7 @@ What constitutes **proof** that a change works. Claiming "done" requires running
 
 - Fast gate (every change): <!-- TODO: e.g. `npm run typecheck && npm test` -->
 - Behavior proof (feature work): <!-- TODO: how to drive the real flow — e2e suite, smoke script, or manual steps -->
-- Evidence lands in the plan's Verify table — pasted output or a screenshot for UI — secrets redacted.
+- Evidence lands in the plan's Verify table — pasted output or a screenshot for UI — secrets redacted. A test written for this change proves it by failing before and passing after; a test that never failed proves nothing.
 
 ## Environment
 

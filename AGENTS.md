@@ -34,7 +34,7 @@ classify → plan → execute → verify → distill (templates/CLOSEOUT.md). Ce
 - Fast gate (every change): `sh adapters/lint.sh && ! grep -rn "README" templates/`
 - Behavior proof (template changes): copy templates/ into a scratch directory and walk one task through the loop — the copied set must answer every question the loop asks.
 - Behavior proof (adapter changes): `sh adapters/lint_test.sh` stays green.
-- Evidence lands in the plan's Verify table, secrets redacted.
+- Evidence lands in the plan's Verify table, secrets redacted. A test written for this change proves it by failing before and passing after; a test that never failed proves nothing.
 
 ## Environment
 
