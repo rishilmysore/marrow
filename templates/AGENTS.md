@@ -61,6 +61,7 @@ Quirks that cost sessions to rediscover. Update the moment you hit one.
 
 - Tokens: <!-- TODO: type scale, spacing unit, palette source -->
 - Bar for any shipped UI: keyboard-reachable, responsive at common widths, light + dark themes, loading/empty/error states designed, no layout shift on load.
+- Verify against rendered output: a UI-affecting change's evidence is a screenshot or rendered artifact — the agent looked at the page; where the harness cannot render, the Verify row names what stood in for eyes.
 
 ## Boundaries
 
