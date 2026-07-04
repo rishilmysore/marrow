@@ -95,8 +95,10 @@ Form fields (friction-report.yml; labels and wording are the executor's): marrow
 
 <!-- One atomic commit each, imperative mood. Fast gate before every commit. Record deviations inline. -->
 
-1. [ ] **Sweep control — before any README edit.** Enumerate every mechanical claim in README.md as of the plan commit (any statement about a shipped file's content, behavior, count, or command) into a table: claim → file:line it describes → verdict. At least one claim must come up stale; if none does, the sweep is broken — fix the procedure and rerun before trusting it. Then, and only then, open Appendix A and confirm the sealed canary is among the findings; if it is not, same rule: fix the sweep, rerun. Paste the table into Verify row 2. No commit — the stale line is fixed by Task 2's authorship, not a spot-edit.
-2. [ ] **README.** Restructure and extend to meet every coverage criterion a–g under the Context constraints (register, surviving content, point-don't-restate, quickstart in the first screen). New ground the current file lacks: quickstart, the two non-Claude harness paths, the versioning policy (from Spec, adopter-visible), the upgrade workflow, the feedback section (0.x status, §Instrumentation, pointer to the form). Commit: `README: onboard a cold adopter — quickstart, harnesses, versioning, upgrade, feedback`
+1. [x] **Sweep control — before any README edit.** Enumerate every mechanical claim in README.md as of the plan commit (any statement about a shipped file's content, behavior, count, or command) into a table: claim → file:line it describes → verdict. At least one claim must come up stale; if none does, the sweep is broken — fix the procedure and rerun before trusting it. Then, and only then, open Appendix A and confirm the sealed canary is among the findings; if it is not, same rule: fix the sweep, rerun. Paste the table into Verify row 2. No commit — the stale line is fixed by Task 2's authorship, not a spot-edit.
+   - Deviation: reading this plan file exposed Appendix A to the executor before the sweep ran — the seal cannot survive a full-file read. Mitigation: the sweep ran on a cold subagent given only README.md + shipped files (plans/, STATE.md, DECISIONS.md, AGENTS.md excluded), restoring the blind property; the executor only cross-checked its findings against Appendix A afterward.
+   - Deviation: Appendix B expected 12 unpushed commits at execution; origin/main was already at 4bf77c9 (the 12 + this plan's own 2 commits, pushed outside this session between plan time and execution). Log matches Appendix B + plan commits exactly; no tags on the remote — the irreversible act is still ahead. Not a Budget stop (that triggers on unexplained commits); Task 8 ordering still governs the tag.
+2. [x] **README.** Restructure and extend to meet every coverage criterion a–g under the Context constraints (register, surviving content, point-don't-restate, quickstart in the first screen). New ground the current file lacks: quickstart, the two non-Claude harness paths, the versioning policy (from Spec, adopter-visible), the upgrade workflow, the feedback section (0.x status, §Instrumentation, pointer to the form). Commit: `README: onboard a cold adopter — quickstart, harnesses, versioning, upgrade, feedback`
 3. [ ] **CHANGELOG.md.** Keep a Changelog 1.1: `## [Unreleased]` (empty) and `## [0.1.0] - <exec-date>` describing what an adopter vendors at this cut — the five templates, the loop, the lint adapter and its BASE argument, the marker convention — adopter-facing, no internal narrative. Commit: `CHANGELOG: 0.1.0 — first public cut`
 4. [ ] **Friction-report form.** Write .github/ISSUE_TEMPLATE/friction-report.yml per §Instrumentation and §Form fields, GitHub issue-form schema. Validation bar: a YAML parse (any parser at hand) plus a field-by-field check against the schema docs; the rendered form is re-checked live in Task 9. Commit: `feedback: friction-report issue form`
 5. [ ] **Staleness sweep — finished docs.** Rerun the Task-1-validated procedure over the finished README and CHANGELOG. Every mechanical claim verifies against its file or gets pointerized; zero stale. Paste the final table into Verify row 3. Fix-commits as needed: `README: de-stale <claim>`
@@ -111,7 +113,7 @@ Form fields (friction-report.yml; labels and wording are the executor's): marrow
 | Check                             | How                                                                                                                                      | Evidence |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | 1 Fast gate + harness             | `sh adapters/lint.sh && ! grep -rn "README" templates/` exits 0; `sh adapters/lint_test.sh` ends `lint-test: 26 ok, 0 failing`           |          |
-| 2 Sweep control caught the canary | Task 1's table pasted; ≥1 stale claim found blind; Appendix A cross-check passed                                                         |          |
+| 2 Sweep control caught the canary | Task 1's table pasted; ≥1 stale claim found blind; Appendix A cross-check passed                                                         | Table at §Evidence — Task 1 below: 27 verified, 2 stale, 3 unverifiable. Both stales = README:40 (check count "three"→four; "CI…checks 1–2 still hold" ignores BASE arg) — found blind by a cold subagent (no plans/ access); Appendix A cross-check: exactly the canary. ✓ |
 | 3 Finished docs sweep clean       | Task 5's claim → file:line → verdict table; zero stale                                                                                   |          |
 | 4 Shipped files untouched         | `git diff <plan-commit>..HEAD --stat -- templates/ adapters/` prints nothing                                                             |          |
 | 5 Newcomer battery                | Per question: subagent's answer + README citation + verdict; defects fixed and rerun clean, or residuals recorded with reasons           |          |
@@ -133,6 +135,43 @@ Run CLOSEOUT.md (Task 7 sequences it against the push). Append exactly these thr
 | <exec-date> | Pushed to origin under explicit one-plan authorization; the standing never-push boundary is unchanged | user instruction 2026-07-04, recorded in plans/archive/public-cut.md Boundaries |
 
 | <exec-date> | Adoption feedback = one GitHub issue form speaking the instrumentation vocabulary (friction points, moments of silence, leak count) | .github/ISSUE_TEMPLATE/friction-report.yml; unstructured issues lose per-field comparability |
+
+## Evidence — Task 1 sweep (Verify row 2; procedure: cold subagent, README.md + shipped files only, plans/ STATE.md DECISIONS.md AGENTS.md excluded)
+
+| # | README line | Claim | Describes | Verdict |
+|---|---|---|---|---|
+| 1 | 3 | five files | templates/ (5 .md files) | VERIFIED |
+| 2 | 5 | markdown you copy into a repo | templates/* | VERIFIED |
+| 3 | 10 | harness layer = AGENTS.md: build/run/prove, boundaries, quirks | templates/AGENTS.md:25-47,64-68 | VERIFIED |
+| 4 | 11 | loop: fresh context, evidence gate, distill+GC at close | AGENTS.md:20, _TEMPLATE.md:38, CLOSEOUT.md:5,9 | VERIFIED |
+| 5 | 15 | classify → plan → execute → verify → distill | templates/AGENTS.md:17 | VERIFIED |
+| 6 | 17 | three classes, ceremony scales | templates/AGENTS.md:17-21 | VERIFIED |
+| 7 | 17 | plans written for executor with no other context | templates/plans/_TEMPLATE.md:3 | VERIFIED |
+| 8 | 17 | cannot close while any Verify row lacks evidence | _TEMPLATE.md:38, CLOSEOUT.md:7 | VERIFIED |
+| 9 | 17 | closing runs CLOSEOUT: distill, archive, regenerate, prune | templates/CLOSEOUT.md:9,11,12,13 | VERIFIED |
+| 10 | 17 | AGENTS.md owns operational definitions | templates/AGENTS.md:15-23 | VERIFIED |
+| 11 | 21 | each rule ships in the file that owns it | rows 12–17 | VERIFIED (rules 3–6 live in AGENTS.md body, not header) |
+| 12 | 23 | STATE.md regenerated, never appended, hard-capped | templates/STATE.md:3-4 | VERIFIED |
+| 13 | 24 | DECISIONS.md append-only; current rules fold into AGENTS.md | templates/DECISIONS.md:3-5 | VERIFIED |
+| 14 | 25 | history in git; docs describe present | templates/AGENTS.md:56 | VERIFIED |
+| 15 | 26 | no document restates another | templates/AGENTS.md:56 | VERIFIED |
+| 16 | 27 | ceremony scales by classify rule | templates/AGENTS.md:17 | VERIFIED |
+| 17 | 28 | vendor what you adopt | templates/AGENTS.md:57 | VERIFIED |
+| 18 | 33 | `cp -r templates/* your-project/` | ran it — copies all 5 | VERIFIED |
+| 19 | 36 | cp overwrites existing AGENTS.md, destroys uncommitted edits | tested | VERIFIED |
+| 20 | 36 | Claude Code: CLAUDE.md with @AGENTS.md, import guaranteed | external harness | UNVERIFIABLE |
+| 21 | 36 | marker `marrow v0`, `@ abc1234` once appended | all 5 templates line 3 | VERIFIED |
+| 22 | 36 | fill TODO markers + `<Project>` title | templates/AGENTS.md:1 +12 TODOs | VERIFIED |
+| 23 | 36 | seed STATE.md Focus and Next action | templates/STATE.md:6-7 | VERIFIED |
+| 24 | 38 | Claude Code reads AGENTS.md once at session start | external harness | UNVERIFIABLE |
+| 25 | 40 | adapters/lint.sh, POSIX | adapters/lint.sh:1; 26 harness cases green under sh | VERIFIED |
+| 26 | 40 | "three mechanical invariants — state cap, evidence-gated archives, append-only decisions" | adapters/lint.sh:12-61 | **STALE** — four checks, 0–3; check 0 (live instance carries STATE.md, lint.sh:12-15) uncounted |
+| 27 | 40 | append-only check compares worktree against HEAD | adapters/lint.sh:8,50-51 | VERIFIED (default invocation) |
+| 28 | 40 | "only has teeth before the commit lands; as a CI step, checks 1–2 still hold" | adapters/lint.sh:5,8 | **STALE** — header documents `sh adapters/lint.sh origin/main`; with BASE, check 3 is range-aware (lint_test.sh BASE=HEAD~1 case); no-arg CI holds 0–2, not "1–2" |
+| 29 | 40 | one-line hook command in its header | adapters/lint.sh:4 | VERIFIED |
+| 30 | 40 | lint_test.sh keeps the check honest | ran: `lint-test: 26 ok, 0 failing` | VERIFIED |
+| 31 | 42 | root files are the live instance; archive holds worked examples | repo root; plans/archive/ (3 files) | VERIFIED |
+| 32 | 50 | lineage counts (e.g. GSD ~70 commands) | third-party frameworks | UNVERIFIABLE |
 
 ## Appendix A — SEALED: read only when Task 1 directs
 
