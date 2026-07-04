@@ -8,7 +8,7 @@
 
 ## In flight
 
-- plans/<slug>.md — planning | executing | verifying
+- none <!-- or: plans/<slug>.md — planning | executing | blocked -->
 
 ## Blockers
 
