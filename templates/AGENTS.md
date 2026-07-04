@@ -53,6 +53,7 @@ Quirks that cost sessions to rediscover. Update the moment you hit one.
 - Comments: only for constraints the code cannot express.
 - Bugfix: failing test first, then the fix.
 - Debugging: reproduce → hypothesize → instrument → fix. Three failed fixes on one symptom → stop and write a plan.
+- Dependencies: verify a new one exists in its registry — exact name, current version — before adding it; invented package names are an attack surface.
 - History lives in git; docs describe the present. No document restates another — derive, don't copy.
 - Vendor what you adopt: no third-party skill packs at runtime — copy in, pin, review once.
 
