@@ -55,7 +55,7 @@
 
 <!-- One atomic commit each unless stated, imperative mood. Fast gate before every commit. Record deviations inline. Old/new blocks are byte-exact and column-0. -->
 
-1. [ ] **E1 — dependency-existence check.** In `templates/AGENTS.md`, replace:
+1. [x] **E1 — dependency-existence check.** In `templates/AGENTS.md`, replace:
 
 ```
 - Debugging: reproduce → hypothesize → instrument → fix. Three failed fixes on one symptom → stop and write a plan.
@@ -70,7 +70,7 @@ with:
 
 No root mirror — root Conventions has no Debugging anchor (Context). Commit: `AGENTS: verify a dependency exists in its registry before adding it`
 
-2. [ ] **E2 — red→green evidence.** In `templates/AGENTS.md`, replace:
+2. [x] **E2 — red→green evidence.** In `templates/AGENTS.md`, replace:
 
 ```
 - Evidence lands in the plan's Verify table — pasted output or a screenshot for UI — secrets redacted.
@@ -96,7 +96,7 @@ with:
 
 Deviation (pre-resolved at plan time): the root anchor had drifted from the mission's old block — no screenshot clause — and is adapted above per the mission's drift rule. Commit: `AGENTS: a test that never failed proves nothing`
 
-3. [ ] **E3 — threat naming.** In `templates/plans/_TEMPLATE.md`, replace:
+3. [x] **E3 — threat naming.** In `templates/plans/_TEMPLATE.md`, replace:
 
 ```
 - Failure modes / threats designed against:
@@ -110,7 +110,7 @@ with:
 
 Commit: `plan template: security-sensitive Spec names attack surfaces and abusers`
 
-4. [ ] **E4 — visual evidence bar (Design module).** In `templates/AGENTS.md`, replace:
+4. [x] **E4 — visual evidence bar (Design module).** In `templates/AGENTS.md`, replace:
 
 ```
 - Bar for any shipped UI: keyboard-reachable, responsive at common widths, light + dark themes, loading/empty/error states designed, no layout shift on load.
@@ -125,7 +125,7 @@ with:
 
 Module-scoped by the section's own "(UI repos — delete otherwise)"; no root mirror. Commit: `AGENTS: Design bar — verify UI against rendered output`
 
-5. [ ] **E5 — fresh-verify adapter.** Create `adapters/fresh-verify.md` with exactly (line breaks as the mission gave them; its uniform block indent stripped to column 0 — the one normalization, a plan-time decision):
+5. [x] **E5 — fresh-verify adapter.** Create `adapters/fresh-verify.md` with exactly (line breaks as the mission gave them; its uniform block indent stripped to column 0 — the one normalization, a plan-time decision):
 
 ```
 # fresh-verify — optional adapter <!-- marrow v0 -->
@@ -146,18 +146,21 @@ requires this file — delete it if unused, per the adapter convention.
 
 Commit: `adapters: fresh-verify — optional fresh-context verification`
 
-6. [ ] **README.** Exactly three touches, authorship the executor's within Boundary 5: (a) Install: `--branch v0.1.0` → `--branch v0.2.0`, and the marker example `marrow v0 @ v0.1.0` → `marrow v0 @ v0.2.0` — the install pin tracks the release the README ships in; (b) the § Lint adapters paragraph currently opens "One example ships here: `adapters/lint.sh`…" — rework minimally so it also names `adapters/fresh-verify.md` as a second, optional adapter (one clause on what it is; deletability is already covered by "none are required"); (c) Rules index: unchanged by default — no template header gained a law; add a line only if Task 8's sweep flags the index incomplete, and record the call either way. Everything else untouched; the Upgrading example (v0.1.0 → v0.2.0) becomes the literal current upgrade and is expected byte-unchanged. Commit: `README: name fresh-verify; re-pin install to v0.2.0`
+6. [x] **README.** Exactly three touches, authorship the executor's within Boundary 5: (a) Install: `--branch v0.1.0` → `--branch v0.2.0`, and the marker example `marrow v0 @ v0.1.0` → `marrow v0 @ v0.2.0` — the install pin tracks the release the README ships in; (b) the § Lint adapters paragraph currently opens "One example ships here: `adapters/lint.sh`…" — rework minimally so it also names `adapters/fresh-verify.md` as a second, optional adapter (one clause on what it is; deletability is already covered by "none are required"); (c) Rules index: unchanged by default — no template header gained a law; add a line only if Task 8's sweep flags the index incomplete, and record the call either way. Everything else untouched; the Upgrading example (v0.1.0 → v0.2.0) becomes the literal current upgrade and is expected byte-unchanged. Commit: `README: name fresh-verify; re-pin install to v0.2.0`
+   Recorded call (c): Rules index unchanged — no template header gained a law; E1/E2/E4 are body lines under existing AGENTS.md sections, E3 is a Spec prompt in the plan template.
 
-7. [ ] **CHANGELOG.** Add `## [0.2.0] - <exec-date>` between `## [Unreleased]` (stays, empty) and `## [0.1.0]`: an Added list naming each of the five changes by file and obligation, each with a one-line remediation (adoption is the marker-diff upgrade — README § Upgrading); the Design-module item marked module-scoped (delete the section, no duty applies) and the adapter item optional (nothing requires it; delete if unused). Adopter-side voice; the internal why stays in this plan. Update link refs: `[Unreleased]` compares `v0.2.0...HEAD`; add the `[0.2.0]` release-tag link. Commit: `CHANGELOG: 0.2.0 — verification duties from the research audit`
+7. [x] **CHANGELOG.** Add `## [0.2.0] - <exec-date>` between `## [Unreleased]` (stays, empty) and `## [0.1.0]`: an Added list naming each of the five changes by file and obligation, each with a one-line remediation (adoption is the marker-diff upgrade — README § Upgrading); the Design-module item marked module-scoped (delete the section, no duty applies) and the adapter item optional (nothing requires it; delete if unused). Adopter-side voice; the internal why stays in this plan. Update link refs: `[Unreleased]` compares `v0.2.0...HEAD`; add the `[0.2.0]` release-tag link. Commit: `CHANGELOG: 0.2.0 — verification duties from the research audit`
 
-8. [ ] **Behavior proofs — four walks in a scratch instance; no commit in this repo.** Copy `templates/*` and `adapters/` into a scratch toy repo (2–3 file toy project), fill install TODOs minimally, keep the Design section, git-init so lint has teeth. Then:
+8. [x] **Behavior proofs — four walks in a scratch instance; no commit in this repo.** Copy `templates/*` and `adapters/` into a scratch toy repo (2–3 file toy project), fill install TODOs minimally, keep the Design section, git-init so lint has teeth. Then:
    - (a) **Dependency walk (E1 + E2):** toy task "add a small real package" — classifies risky-novel (the "dependency" trigger; the m-1 deferral stands). Must produce: registry lookup output for the exact name + current version (any real registry at hand — npm, PyPI, crates.io); an invented-control lookup (plausible fake name) failing, the add refused on that basis; a test written for the change failing before and passing after — the red→green transcript. All in the walk plan's Verify rows. → Verify row 3.
    - (b) **UI walk (E4):** toy UI-affecting change (a static HTML page suffices); evidence is a rendered artifact — screenshot via any renderer at hand; if none, exercise the line's own fallback: the Verify row names what stood in for eyes. → Verify row 4.
    - (c) **Security walk (E3):** toy security-sensitive task (e.g. the toy's fetch script gains an API token) — classify risky-novel, fill Spec; the extended prompt must elicit named attack surfaces and who abuses them, in the walk plan's own words. → Verify row 5.
    - (d) **fresh-verify walk (E5):** on walk (a)'s finished plan, follow `adapters/fresh-verify.md`: a fresh context holding only that plan + the copied AGENTS.md re-runs each Verify row and returns evidence, marked `fresh-verify`. → Verify row 6.
    A walk that cannot exercise its line, or exposes it as wrong: flag it in the row — flagged, not assumed — and see Budget before Task 9.
+   Deviations, walk-side (recorded here; none touches a shipped line): walk (a)'s first green run failed — picocolors strips ANSI when stdout is no TTY; fixed with `createColors(true)` in the toy. Walk (b) planned a `playwright` module import but used the Playwright CLI (`npx playwright screenshot`) — module not resolvable outside a package; same renderer. Walk (b)'s plan was committed with the work, not before execution — single-session walk, handoff discipline unexercised. Walk (d)'s fresh context read greet.test.js beyond the two-file manifest — required by the Red→green row's own "test written for this change" check; recorded in row 6.
 
-9. [ ] **Closeout, pre-push.** Run CLOSEOUT.md: deviations recorded; append exactly the three §Closeout rows (`<exec-date>` = execution date); step 4's fold-in is discharged (Boundary 6); measure the ledger for Verify row 8; archive this plan with Verify rows 11–12 carrying the literal text `deferred: post-push — replaced by the evidence commit`; regenerate STATE.md — Focus: adopt v0.2.0 on the first real projects; Next action: install on the first adoption target — a UI-project test repo (plan review 2026-07-04: the intended test repo is a UI project, so the Design module's visual-evidence bar is exercised from the first loop); name the repo at install time; In flight: none. One commit: `closeout: v0-proof`
+9. [x] **Closeout, pre-push.** Run CLOSEOUT.md: deviations recorded; append exactly the three §Closeout rows (`<exec-date>` = execution date); step 4's fold-in is discharged (Boundary 6); measure the ledger for Verify row 8; archive this plan with Verify rows 11–12 carrying the literal text `deferred: post-push — replaced by the evidence commit`; regenerate STATE.md — Focus: adopt v0.2.0 on the first real projects; Next action: install on the first adoption target — a UI-project test repo (plan review 2026-07-04: the intended test repo is a UI project, so the Design module's visual-evidence bar is exercised from the first loop); name the repo at install time; In flight: none. One commit: `closeout: v0-proof`
+   Deviation: Verify row 2's How ("immediately before Task 10's tag") is only satisfiable after this closeout commit exists, so its cell carries a pre-closeout run plus the rows-11/12 deferred pattern; the evidence commit records the actual pre-tag run — a third deferred cell the plan didn't anticipate.
 
 10. [ ] **Tag, push, release — in order, stop at any surprise.** `git status` clean → fast gate + `sh adapters/lint_test.sh` (26 ok) + `sh adapters/lint.sh origin/main` (the range-aware BASE form across the whole unpushed delta — its first real use) → `git log --oneline origin/main..HEAD` lists exactly §Publish delta, nothing else → `git tag -a v0.2.0 -m "marrow v0.2.0 — verification duties"` → `git push --dry-run origin main` → `git push origin main` → `git push origin v0.2.0` → `gh auth status`, then `gh release create v0.2.0 --verify-tag --title "marrow v0.2.0"` with the [0.2.0] CHANGELOG section as notes. gh auth gone → skip the release, record the manual step in Verify row 11's evidence, do not block.
 
@@ -171,18 +174,18 @@ origin/main = b75c0df at plan time. `git log --oneline origin/main..HEAD` must l
 
 | Check | How | Evidence |
 |---|---|---|
-| 1 Fast gate + harness | `sh adapters/lint.sh && ! grep -rn "README" templates/` exit 0; `sh adapters/lint_test.sh` ends exactly `lint-test: 26 ok, 0 failing` — at closeout and before every commit | |
-| 2 Range-aware pre-push gate | `sh adapters/lint.sh origin/main` → `marrow-lint: ok` across the whole unpushed delta, immediately before Task 10's tag | |
-| 3 Dependency walk | Walk (a): registry output (exact name, current version), invented-name control refused, red→green transcript — pasted or tightly summarized, the walk plan's Verify rows quoted | |
-| 4 UI walk | Walk (b): rendered-artifact reference — or the named stand-in per E4's fallback clause — in the walk plan's Verify row, quoted | |
-| 5 Security walk | Walk (c): the filled Spec line naming attack surfaces + who abuses them, quoted | |
-| 6 fresh-verify walk | Walk (d): the fresh context's manifest (that plan + copied AGENTS.md only) + its returned rows marked `fresh-verify` | |
-| 7 Staleness sweep | The validated public-cut procedure: cold subagent over the finished README.md + CHANGELOG.md + shipped files only (plans/, STATE.md, DECISIONS.md, root AGENTS.md excluded); claim → file:line → verdict table; zero stale after fixes; post-push-only claims deferred → row 12 | |
-| 8 Token ledger, measured | At Task 9: `wc -c templates/AGENTS.md templates/plans/_TEMPLATE.md AGENTS.md` vs baselines 3871 / 1591 / 3531; tokens ≈ bytes/4; attribute E1+E2 (every-session), E3 (per-plan), E4 (Design-module) vs estimates 34/37/15/50; Budget trips if every-session > +120 | |
-| 9 Mirror parity + frozen lines | `grep -c "never failed proves nothing" AGENTS.md templates/AGENTS.md` → 1 and 1; `grep -c "Dependencies: verify" AGENTS.md templates/AGENTS.md` → 0 and 1; `grep -c "stood in for eyes" AGENTS.md templates/AGENTS.md` → 0 and 1; each Boundary-3 frozen line found verbatim by `grep -F` | |
-| 10 Scope freeze | `git diff b75c0df..HEAD --stat` lists only Context's touch list plus plans/ moves; `git diff b75c0df..HEAD -- templates/STATE.md templates/DECISIONS.md templates/CLOSEOUT.md adapters/lint.sh adapters/lint_test.sh LICENSE CLAUDE.md .github/` prints nothing | |
-| 11 Tag + release published | `git ls-remote --tags origin` shows v0.2.0; push output; release URL via `--verify-tag` (or the recorded manual step) | |
-| 12 Cold clone carries the cut | Fresh clone at v0.2.0 outside this repo: README-cold install lint-green in a scratch repo; every new line greps in the cloned files; fresh-verify.md byte-equal; row 7's deferred claims resolve | |
+| 1 Fast gate + harness | `sh adapters/lint.sh && ! grep -rn "README" templates/` exit 0; `sh adapters/lint_test.sh` ends exactly `lint-test: 26 ok, 0 failing` — at closeout and before every commit | ran before each of the seven task commits (`marrow-lint: ok` each time); at closeout: `marrow-lint: ok`, fast-gate exit 0, `lint-test: 26 ok, 0 failing` |
+| 2 Range-aware pre-push gate | `sh adapters/lint.sh origin/main` → `marrow-lint: ok` across the whole unpushed delta, immediately before Task 10's tag | pre-closeout run over b75c0df..worktree: `marrow-lint: ok`; pre-tag re-run deferred: post-push — replaced by the evidence commit (the How is only satisfiable after this closeout commit exists; deviation recorded under Task 9) |
+| 3 Dependency walk | Walk (a): registry output (exact name, current version), invented-name control refused, red→green transcript — pasted or tightly summarized, the walk plan's Verify rows quoted | toy plans/archive/add-picocolors.md, classified risky-novel on the dependency trigger. Registry row: "`name = 'picocolors'` / `version = '1.1.1'`; control `npm view pikocolours-node version` → `npm error code E404 …`, exit 1 — add refused for any name that 404s". Red→green row: "before: `✖ … tests 1, pass 0, fail 1`; after: `✔ … tests 1, pass 1, fail 0`". The E1 line fired as written; the walk's one surprise (picocolors strips ANSI off-TTY) was package behavior, not a defect in the line |
+| 4 UI walk | Walk (b): rendered-artifact reference — or the named stand-in per E4's fallback clause — in the walk plan's Verify row, quoted | toy plans/archive/quote-card.md Behavior row: "rendered artifacts: `../shots/quote-card-{light,dark,narrow}.png` (Playwright headless chromium, 900×600 light/dark + 360×640) — inspected: card focal, tokens applied, dark theme inverts paper/ink with lighter accent, 360px reflows without overflow". Renderer existed, so the fallback clause went unexercised (screenshot path taken; fallback not proven false, just unneeded) |
+| 5 Security walk | Walk (c): the filled Spec line naming attack surfaces + who abuses them, quoted | toy plans/archive/token-fetch.md Spec, elicited by the extended prompt, its own words: "git history — the surface is every commit; the abuser is anyone who ever clones the repo"; "process table and shell history — the surface is `ps auxe` / `~/.bash_history`; the abuser is any other local user on a shared box"; "stdout/stderr and CI logs — … the abuser is whoever reads the build log". Three surfaces, each with a named abuser and rail |
+| 6 fresh-verify walk | Walk (d): the fresh context's manifest (that plan + copied AGENTS.md only) + its returned rows marked `fresh-verify` | subagent manifest: the finished add-picocolors plan + copied AGENTS.md (+ greet.test.js, inspected only because the Red→green row itself demands "test written for this change"). All four rows returned `fresh-verify:`-prefixed and **confirms**; red half correctly identified as author-context-only; one real catch — the Fast-gate cell's `fast gate: ok` string was an author annotation, not command output (substance verified, exit 0) |
+| 7 Staleness sweep | The validated public-cut procedure: cold subagent over the finished README.md + CHANGELOG.md + shipped files only (plans/, STATE.md, DECISIONS.md, root AGENTS.md excluded); claim → file:line → verdict table; zero stale after fixes; post-push-only claims deferred → row 12 | cold subagent, full claim → file:line → verdict table returned: **60 claims — 0 stale, 54 ok, 6 deferred post-push** (the v0.2.0 clone/branch, the v0.1.0↔v0.2.0 diff, the three CHANGELOG link refs, the friction-form URL). Zero fixes needed — Rules index confirmed complete as-is (Task 6c call stands). Deferred claims → row 12 |
+| 8 Token ledger, measured | At Task 9: `wc -c templates/AGENTS.md templates/plans/_TEMPLATE.md AGENTS.md` vs baselines 3871 / 1591 / 3531; tokens ≈ bytes/4; attribute E1+E2 (every-session), E3 (per-plan), E4 (Design-module) vs estimates 34/37/15/50; Budget trips if every-session > +120 | measured 4362 / 1658 / 3650. Per-edit: E1 156 B ≈ 39 tok, E2 119 B ≈ 29 tok, E4 216 B ≈ 54 tok (sum 491 B = the exact templates/AGENTS.md delta); E3 67 B ≈ 16 tok; root mirror 119 B ≈ 29 tok. Every-session E1+E2 = 275 B ≈ **68 tok ≤ +120 cap**; vs estimates: 39/29/16/54 against 34/37/15/50 | 
+| 9 Mirror parity + frozen lines | `grep -c "never failed proves nothing" AGENTS.md templates/AGENTS.md` → 1 and 1; `grep -c "Dependencies: verify" AGENTS.md templates/AGENTS.md` → 0 and 1; `grep -c "stood in for eyes" AGENTS.md templates/AGENTS.md` → 0 and 1; each Boundary-3 frozen line found verbatim by `grep -F` | parity exactly as required: 1/1, 0/1, 0/1. `grep -F` found each frozen line, count 1, in every owning file: the Verify heading + `\| Check \| How \| Evidence \|` and the three untouched Spec prompts in _TEMPLATE.md; `Claiming "done" …` in templates/AGENTS.md; reclassify, handoff, context-diet, vendor lines in both AGENTS.md | 
+| 10 Scope freeze | `git diff b75c0df..HEAD --stat` lists only Context's touch list plus plans/ moves; `git diff b75c0df..HEAD -- templates/STATE.md templates/DECISIONS.md templates/CLOSEOUT.md adapters/lint.sh adapters/lint_test.sh LICENSE CLAUDE.md .github/` prints nothing | stat at Task 9: AGENTS.md, CHANGELOG.md, README.md, STATE.md, adapters/fresh-verify.md, plans/v0-proof.md, templates/AGENTS.md, templates/plans/_TEMPLATE.md — all in Context's list (DECISIONS.md + archive move land in the closeout commit). Frozen-set diff: 0 bytes | 
+| 11 Tag + release published | `git ls-remote --tags origin` shows v0.2.0; push output; release URL via `--verify-tag` (or the recorded manual step) | deferred: post-push — replaced by the evidence commit |
+| 12 Cold clone carries the cut | Fresh clone at v0.2.0 outside this repo: README-cold install lint-green in a scratch repo; every new line greps in the cloned files; fresh-verify.md byte-equal; row 7's deferred claims resolve | deferred: post-push — replaced by the evidence commit |
 
 ## Budget
 
