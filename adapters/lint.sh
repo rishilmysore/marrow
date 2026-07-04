@@ -1,5 +1,5 @@
 #!/bin/sh
-# marrow v0 — mechanical check of the three invariants the docs cannot self-enforce.
+# marrow v0 — mechanical check of the invariants the docs cannot self-enforce.
 # Run from the repo root; regression harness: sh adapters/lint_test.sh.
 # Wire as a hook: printf 'sh adapters/lint.sh\n' > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 # CI: sh adapters/lint.sh origin/main — check 3 diffs DECISIONS.md against that base instead of HEAD.
@@ -8,6 +8,11 @@ set -eu
 BASE=${1:-HEAD}
 
 fail() { echo "marrow-lint: $1" >&2; exit 1; }
+
+# 0. A live instance — plans/ or DECISIONS.md present — must carry STATE.md.
+if [ -d plans ] || [ -f DECISIONS.md ]; then
+  [ -f STATE.md ] || fail "STATE.md missing"
+fi
 
 # 1. STATE.md hard cap — the header owns the number; a missing phrase fails loud.
 if [ -f STATE.md ]; then

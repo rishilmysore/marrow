@@ -52,6 +52,10 @@ VH='## Verify — the gate
 fresh;     expect 0 "clean instance, no git"
 fresh git; expect 0 "clean instance, committed"
 
+# 0 — a live instance must carry STATE.md
+fresh; rm "$T/STATE.md"
+expect 1 "plans/ and DECISIONS.md present but STATE.md missing"
+
 # 1 — STATE.md cap
 fresh; { printf '# State\n\n<!-- Hard cap: 25 lines. -->\n'; pad 23; } > "$T/STATE.md"
 expect 1 "26 lines over a 25 cap"
