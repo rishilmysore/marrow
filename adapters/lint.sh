@@ -49,6 +49,11 @@ if git cat-file -e "$BASE":DECISIONS.md 2>/dev/null; then
     grep -qxF -- "$row" decisions/archive-*.md 2>/dev/null ||
       fail "DECISIONS.md row removed without a verbatim archive copy: $row"
   done
+  # Epoch moves are all-or-nothing: once any dated row leaves, none may stay behind.
+  if git diff "$BASE" -- DECISIONS.md | sed -n 's/^-//p' | grep -q '^| *[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *|'; then
+    ! grep -q '^| *[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *|' DECISIONS.md 2>/dev/null ||
+      fail "DECISIONS.md partial removal — epoch moves take every row"
+  fi
 fi
 
 echo "marrow-lint: ok"

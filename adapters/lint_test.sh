@@ -115,9 +115,13 @@ fresh git; del_row; (cd "$T" && git add DECISIONS.md)
 expect 1 "row deleted, staged, no archive"
 fresh git; sed 's/adopt X/adopt Z/' "$T/DECISIONS.md" > "$T/.d" && mv "$T/.d" "$T/DECISIONS.md"
 expect 1 "row edited in place"
+fresh git; sed -n '5,6p' "$T/DECISIONS.md" > "$T/.rows"
+sed '5,6d' "$T/DECISIONS.md" > "$T/.d" && mv "$T/.d" "$T/DECISIONS.md"
+mkdir -p "$T/decisions" && mv "$T/.rows" "$T/decisions/archive-2026.md"
+expect 0 "full epoch move — every row verbatim in decisions/archive-2026.md"
 fresh git; row=$(sed -n '5p' "$T/DECISIONS.md"); del_row
 mkdir -p "$T/decisions"; printf '%s\n' "$row" > "$T/decisions/archive-2026.md"
-expect 0 "epoch move — removed row verbatim in decisions/archive-2026.md"
+expect 1 "single-row removal with an archive copy — partial epoch move"
 fresh git; del_row; mkdir -p "$T/decisions"
 printf '| 1999-01-01 | unrelated | x |\n' > "$T/decisions/archive-2026.md"
 (cd "$T" && git add decisions)
